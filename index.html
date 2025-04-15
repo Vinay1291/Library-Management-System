@@ -9,38 +9,53 @@
 </head>
 
 <body>
-    <div class="header-contaner">
-        <div class="header">
-            <div class="logo">LMS</div>
-            <div class="links">
-                <div><a class="head-link" href="#">LOGIN</a></div>
-                <div><a class="head-link" href="#">SING UP</a></div>
-            </div>
-        </div>
+
+
+  <header>
+    <div class="header-left">
+      <div class="hamburger" id="hamburger">&#9776;</div>
+      <div class="logo">📚 MyLibrary</div>
     </div>
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Books</a></li>
+        <li><a href="#">Members</a></li>
+        <li><a class="head-link" href="#">Login</a></li>
+        <li><a class="head-link" href="#">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="hero-contaner">
-        <div class="hero">
-            <h1>Welcome to the Library Management System</h1>
-            <p>
-                This system is designed to make it easier for students, staff, and administrators
-                to manage and access library resources. From book searches to easy checkouts, everything is just a click
-                away!
-            </p>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1>Welcome to LMS</h1>
+            <p>Your digital Library Management System for managing books, members, and everything in between.</p>
+            <a href="#" class="btn-primary">Get Started</a>
         </div>
-    </div>
+    </main>
 
+    <section class="features">
+        <div class="feature-card">
+            <h3>📖 Manage Books</h3>
+            <p>Add, edit, and organize your book collection with ease.</p>
+        </div>
+        <div class="feature-card">
+            <h3>👥 Manage Members</h3>
+            <p>Track member activity, borrowing history, and profiles.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📊 Reports</h3>
+            <p>View borrowing statistics and overdue book reports.</p>
+        </div>
+    </section>
 
+    <footer>
+        <p>&copy; 2025 MyLibrary. All rights reserved.</p>
+    </footer>
 
-    <h3>Features:</h3>
-    <ul>
-        <li>Search and reserve books online</li>
-        <li>View borrowing history and due dates</li>
-        <li>Admin dashboard for managing books and members</li>
-    </ul>
-
-    <p><a href="index.html">Login</a> | <a href="registration.html">Register</a></p>
-
+    <script src="js/main.js"></script>
 </body>
 
 </html>
