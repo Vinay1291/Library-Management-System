@@ -12,3 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
+
+<!-- 
+You can include this file anywhere with: 
+        'require_once 'includes/db.php'; ,
+
+-->
