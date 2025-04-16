@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost';         // or your DB host
+$host = 'lms.lib';         // or your DB host
 $username = 'root';          // your DB username
-$password = '';              // your DB password
-$database = 'library_db';    // your database name
+$password = 'admin';              // your DB password
+$database = 'LMS_db';    // your database name
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
