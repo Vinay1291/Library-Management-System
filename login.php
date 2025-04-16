@@ -10,39 +10,79 @@ if (isLoggedIn()) {
 }
 
 // Handle form submission for login
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // For Login
+    if (isset($_POST['login'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-    // Query the database to check if the user exists
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    // Check if user exists
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+        // Query the database to check if the user exists
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
         
-        // Verify password
-        if (password_verify($password, $user['password'])) {
-            // Set session variables
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = $user['role']; // e.g., 'admin' or 'user'
+        // Check if user exists
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
             
-            // Redirect to dashboard
-            header('Location: dashboard.php');
-            exit();
+            // Verify password
+            if (password_verify($password, $user['password'])) {
+                // Set session variables
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['role'] = $user['role']; // e.g., 'admin' or 'user'
+                
+                // Redirect to dashboard
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                $login_error = "Invalid password!";
+            }
         } else {
-            $error = "Invalid password!";
+            $login_error = "No user found with that email!";
         }
-    } else {
-        $error = "No user found with that email!";
+    }
+
+    // For Signup
+    if (isset($_POST['signup'])) {
+        $fullname = $_POST['fullname'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $repeat_password = $_POST['repeat_password'];
+
+        // Check if passwords match
+        if ($password !== $repeat_password) {
+            $signup_error = "Passwords do not match!";
+        } else {
+            // Hash password before storing it
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert into the database
+            $sql = "INSERT INTO users (fullname, phone, email, password) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssss", $fullname, $phone, $email, $hashed_password);
+            $stmt->execute();
+
+            // Check if the insert was successful
+            if ($stmt->affected_rows > 0) {
+                $_SESSION['user_id'] = $stmt->insert_id; // Get the inserted user's ID
+                $_SESSION['email'] = $email;
+                $_SESSION['role'] = 'user'; // Default role
+
+                // Redirect to dashboard
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                $signup_error = "Something went wrong! Please try again.";
+            }
+        }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,25 +98,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     
     <!-- Signup Section -->
     <div class="form-container sign-up-container">
-      <form action="#">
+      <form action="login.php" method="POST">
         <h2>Create Account</h2>
-        <input type="text" placeholder="Full Name" />
-        <input type="text" placeholder="Phone No.">
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="text" placeholder="Repeat Password" />
-        <button>Sign Up</button>
+        
+        <?php if (isset($signup_error)): ?>
+            <div class="error"><?= $signup_error ?></div>
+        <?php endif; ?>
+
+        <input type="text" name="fullname" placeholder="Full Name" required />
+        <input type="text" name="phone" placeholder="Phone No." required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="password" name="repeat_password" placeholder="Repeat Password" required />
+        <button type="submit" name="signup">Sign Up</button>
         <p class="mobile-switch">Already have an account? <a href="#login" id="mobileToLogin">Login</a></p>
       </form>
     </div>
 
     <!-- Login Section -->
     <div class="form-container sign-in-container">
-      <form action="#">
+      <form action="login.php" method="POST">
         <h2>Sign in</h2>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <button>Login</button>
+        
+        <?php if (isset($login_error)): ?>
+            <div class="error"><?= $login_error ?></div>
+        <?php endif; ?>
+        
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit" name="login">Login</button>
         <p class="mobile-switch">Don't have an account? <a href="#signup" id="mobileToSignup">Sign Up</a></p>
       </form>
     </div>
@@ -92,7 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         <div class="overlay-panel overlay-right">
           <h2>Welcome Back!</h2>
           <p>To keep connected with us, please login with your personal info</p>
-          
           <button class="ghost" id="signUp">Sign Up</button>
         </div>
       </div>
@@ -101,5 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   </div>
 
   <script src="assets/js/login.js"></script>
+
 </body>
 </html>

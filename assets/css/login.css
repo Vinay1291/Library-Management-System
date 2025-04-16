@@ -177,6 +177,10 @@ button:hover {
     display: none;
 }
 
+.error {
+    color: red;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
