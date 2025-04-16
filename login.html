@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Signup</title>
+  <link rel="stylesheet" href="assets/css/login.css" />
+</head>
+<body>
+  <div class="container" id="container">
+    
+    <!-- Signup Section -->
+    <div class="form-container sign-up-container">
+      <form action="#">
+        <h2>Create Account</h2>
+        <input type="text" placeholder="Full Name" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button>Sign Up</button>
+        <p class="mobile-switch">Already have an account? <a href="#login" id="mobileToLogin">Login</a></p>
+      </form>
+    </div>
+
+    <!-- Login Section -->
+    <div class="form-container sign-in-container">
+      <form action="#">
+        <h2>Sign in</h2>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button>Login</button>
+        <p class="mobile-switch">Don't have an account? <a href="#signup" id="mobileToSignup">Sign Up</a></p>
+      </form>
+    </div>
+
+    <!-- Overlay Section -->
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h2>Welcome Back!</h2>
+          <p>To keep connected with us, please login with your personal info</p>
+          <button class="ghost" id="signIn">Login</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h2>Hello, Friend!</h2>
+          <p>Enter your details and start your journey with us</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="assets/js/login.js"></script>
+</body>
+</html>
