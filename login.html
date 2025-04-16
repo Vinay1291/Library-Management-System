@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/css/login.css" />
 </head>
 <body>
+
   <div class="container" id="container">
     
     <!-- Signup Section -->
@@ -14,8 +15,10 @@
       <form action="#">
         <h2>Create Account</h2>
         <input type="text" placeholder="Full Name" />
+        <input type="text" placeholder="Phone No.">
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
+        <input type="text" placeholder="Repeat Password" />
         <button>Sign Up</button>
         <p class="mobile-switch">Already have an account? <a href="#login" id="mobileToLogin">Login</a></p>
       </form>
@@ -36,13 +39,14 @@
     <div class="overlay-container">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
-          <h2>Welcome Back!</h2>
-          <p>To keep connected with us, please login with your personal info</p>
+          <h2>Hello, Friend!</h2>
+          <p>Enter your details and start your journey with us</p>
           <button class="ghost" id="signIn">Login</button>
         </div>
         <div class="overlay-panel overlay-right">
-          <h2>Hello, Friend!</h2>
-          <p>Enter your details and start your journey with us</p>
+          <h2>Welcome Back!</h2>
+          <p>To keep connected with us, please login with your personal info</p>
+          
           <button class="ghost" id="signUp">Sign Up</button>
         </div>
       </div>

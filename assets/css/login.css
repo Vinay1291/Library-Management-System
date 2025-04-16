@@ -201,8 +201,8 @@ button:hover {
         display: none;
     }
 
-    .container.right-panel-active .sign-in-container,
-    .container:not(.right-panel-active) .sign-up-container {
+    .container:not(.right-panel-active) .sign-in-container,
+    .container.right-panel-active .sign-up-container {
         display: flex;
     }
 
