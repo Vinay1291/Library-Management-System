@@ -1,11 +1,32 @@
 <?php
 session_start();
 require_once '../includes/auth.php';
+// require_once '../includes/db.php';
 
 if (!isLoggedIn() || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
+
+// // Fetch Total Books
+// $resultBooks = $conn->query("SELECT COUNT(*) AS total FROM books");
+// $totalBooks = $resultBooks->fetch_assoc()['total'];
+
+// // Fetch Lended Books
+// $resultLended = $conn->query("SELECT COUNT(*) AS total FROM book_issues WHERE return_date IS NULL");
+// $lendedBooks = $resultLended->fetch_assoc()['total'];
+
+// // Fetch Available Books
+// $availableBooks = $totalBooks - $lendedBooks;
+
+// // Fetch Total Users
+// $resultUsers = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'user'");
+// $totalUsers = $resultUsers->fetch_assoc()['total'];
+
+// // Fetch Overdue Books (assuming due_date exists)
+// $resultOverdue = $conn->query("SELECT COUNT(*) AS total FROM book_issues WHERE due_date < NOW() AND return_date IS NULL");
+// $overdueBooks = $resultOverdue->fetch_assoc()['total'];
+
 
 $activePage = 'dashboard';
 ?>
@@ -81,6 +102,8 @@ $activePage = 'dashboard';
     </div>
   </div>
 
+   
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
   // Charts
@@ -126,5 +149,6 @@ $activePage = 'dashboard';
 
 </script>
 </div>
+<?php include 'includes/footer.php'; ?> 
 </body>
 </html>

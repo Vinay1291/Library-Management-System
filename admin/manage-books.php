@@ -1,7 +1,6 @@
 <?php
-// db.php
-$conn = new mysqli("localhost", "root", "admin", "LMS_db");
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+require_once '../includes/db.php';
+
 $result = $conn->query("SELECT * FROM books");
 ?>
 <!DOCTYPE html>
