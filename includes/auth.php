@@ -20,9 +20,9 @@ function isAdmin() {
 }
 
 // Redirect if user is not admin (for admin-only pages)
-function redirectIfNotAdmin() {
+function redirectIfNotAdmin($redirectPage = 'dashboard.php') {
     if (!isAdmin()) {
-        header("Location: dashboard.php");
+        header("Location: $r$redirectPage");
         exit();
     }
 }

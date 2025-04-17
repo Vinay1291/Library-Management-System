@@ -33,9 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role']; // e.g., 'admin' or 'user'
+                $_SESSION['name'] = $user['name'];
                 
-                // Redirect to dashboard
-                header('Location: dashboard.php');
+                // Redirect based on role
+                if ($user['role'] === 'admin') {
+                  header("Location: admin/");
+                } else {
+                  header("Location: dashboard.php");
+                }
                 exit();
             } else {
                 $login_error = "Invalid password!";
@@ -47,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // For Signup
     if (isset($_POST['signup'])) {
-        $fullname = $_POST['fullname'];
+        $name = $_POST['name'];
         $phone = $_POST['phone'];
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -61,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             // Insert into the database
-            $sql = "INSERT INTO users (fullname, phone, email, password) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssss", $fullname, $phone, $email, $hashed_password);
+            $stmt->bind_param("ssss", $name, $phone, $email, $hashed_password);
             $stmt->execute();
 
             // Check if the insert was successful
@@ -71,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $stmt->insert_id; // Get the inserted user's ID
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = 'user'; // Default role
+                $_SESSION['name'] = $name;
 
                 // Redirect to dashboard
                 header('Location: dashboard.php');
@@ -105,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="error"><?= $signup_error ?></div>
         <?php endif; ?>
 
-        <input type="text" name="fullname" placeholder="Full Name" required />
+        <input type="text" name="name" placeholder="Full Name" required />
         <input type="text" name="phone" placeholder="Phone No." required />
         <input type="email" name="email" placeholder="Email" required />
         <input type="password" name="password" placeholder="Password" required />
