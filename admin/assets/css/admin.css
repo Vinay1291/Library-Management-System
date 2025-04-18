@@ -12,7 +12,7 @@
 }
 
 .sidebar {
-    width: 220px;
+    width: 300px;
     background-color: white;
     padding-top: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);    
@@ -167,4 +167,17 @@
     min-width: 300px;
     padding: 20px;
     border-radius: 5px;
+}
+
+.books-content {
+    /* display: flex; */
+    height: 100vh;
+}
+
+
+.search {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
