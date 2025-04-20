@@ -36,7 +36,7 @@ $activePage = 'manage-books';
         </div>
         
         <main class="main">
-            <h2><a href="manage-books.php">Manage Books</a> > <a style='color:rgba(0, 0, 255, 0.68);' href="add_books.php" >Add Books</a> </h2> 
+            <h2><a href="manage-books.php">Manage Books</a> > <a style='text-decoration: none;color:#007bff;' href="add_books.php" >Add Books</a> </h2> 
             <div class="container">
                     <h3>Book Information</h3>
 

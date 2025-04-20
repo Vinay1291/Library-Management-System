@@ -106,6 +106,15 @@ table {
   margin-bottom: 20px;
 }
 
+.table a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
 .table th,
 .table td {
   padding: 12px 15px;
@@ -144,6 +153,7 @@ table {
 .table td {
     vertical-align: middle; /* Example: Vertically center content (default) */
 }
+
 
 .table th:first-child,
 .table td:first-child {

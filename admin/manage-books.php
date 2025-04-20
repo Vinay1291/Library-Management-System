@@ -102,7 +102,7 @@ $result = $conn->query("SELECT * FROM books LIMIT $limit OFFSET $offset");
                         <tr data-id="<?= $row['id'] ?>">
                             <td><input type="checkbox"></td>
                             <td> <?= $row['isbn'] ?> </td>
-                            <td> <?= $row['title'] ?> </td>
+                            <td><a href="book_details.php?id=<?= $row['id'] ?>"><?= $row['title'] ?></a></td>
                             <td> <?= $row['author'] ?> </td>
                             <td> <?= $row['category'] ?> </td>
                             <td> <?= $row['language'] ?> </td>
