@@ -11,10 +11,9 @@ $conn = new mysqli($host, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+
+// You can include this file anywhere with: 
+//         'require_once 'includes/db.php'; ,
+
 ?>
-
-<!-- 
-You can include this file anywhere with: 
-        'require_once 'includes/db.php'; ,
-
--->

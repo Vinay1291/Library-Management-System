@@ -7,7 +7,7 @@
     max-width: 900px;
 }
 
-h2 {
+h2 a{
     color: #333;
     margin-bottom: 20px;
     border-bottom: 2px solid #eee;

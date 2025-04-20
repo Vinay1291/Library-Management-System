@@ -53,7 +53,7 @@ $activePage = 'dashboard';
   <div class="main">
     <div class="topbar">
       <h1>Welcome Admin: <?php echo $_SESSION['name'] ?></h1>
-      <button>Add New Book</button>
+      <button onclick="window.location.href='add_books.php'">Add New Book</button>
     </div>
 
     <div class="cards">
@@ -61,35 +61,35 @@ $activePage = 'dashboard';
         <div class="icon-container">
           <span class="icon book-icon"></span>
         </div>
-        <h3>Total Books</h3><p>2000</p>
+        <h3>Total Books</h3><p>0</p>
         <button>View Details</button>
       </div>
       <div class="card card-blue">
         <div class="icon-container">
           <span class="icon book-icon"></span>
         </div>
-        <h3>Lended Books</h3><p>500</p>
+        <h3>Lended Books</h3><p>0</p>
         <button>View Details</button>
       </div>
       <div class="card card-teal">
         <div class="icon-container">
           <span class="icon book-icon"></span>
         </div>
-        <h3>Available Books</h3><p>800</p>
+        <h3>Available Books</h3><p>0</p>
         <button>View Details</button>
       </div>
       <div class="card card-green">
         <div class="icon-container">
           <span class="icon user-icon"></span>
         </div>
-        <h3>Total Users</h3><p>500</p>
+        <h3>Total Users</h3><p>0</p>
         <button>View Details</button>
       </div>
       <div class="card card-pink">
         <div class="icon-container">
           <span class="icon overdue-icon"></span>
         </div>
-        <h3>Overdue Books</h3><p>300</p>
+        <h3>Overdue Books</h3><p>0</p>
         <button>View Details</button>
       </div>
     </div>

@@ -1,12 +1,14 @@
-
+h2 {
+  margin: 20px;
+}
 h2 a {
   color: #0b0b0b;
-  margin: 20px;
   font-size: 20px;
   text-decoration: none;
 }
 
 h2 strong {
+  font-size: 30px;
   color: blue;
 }
 
@@ -69,45 +71,83 @@ h2 strong {
   background-color: #545b62;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #c4dfff;
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown-content a:hover {
+  background-color: #f2f2f2;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-th,
-td {
+.table th,
+.table td {
   padding: 12px 15px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #dee2e6;
 }
 
-tr {
-  display: flex;
-  justify-content: center;
-  justify-items: center;
+.table td {
+  text-align: center;
 }
 
-th {
+.table th {
+  text-align: center;
   background-color: #f2f2f2;
   font-weight: bold;
   color: #495057;
   cursor: pointer;
 }
 
-th.sortable {
-  display: flex;
-  align-items: center;
+.table th.sortable {
+  white-space: nowrap;
 }
 
-th.sortable span {
+.table th.sortable span {
+  display: inline-block;
   margin-left: 5px;
   font-size: 0.8em;
   color: #6c757d;
 }
 
-tr:nth-child(even) {
+.table tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.table th,
+.table td {
+    vertical-align: middle; /* Example: Vertically center content (default) */
+}
+
+.table th:first-child,
+.table td:first-child {
+    vertical-align: top; /* Example: Align checkboxes to the top */
 }
 
 .status-Available {
