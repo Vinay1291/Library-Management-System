@@ -14,6 +14,21 @@ h2 a{
     padding-bottom: 10px;
 }
 
+.breadcrumbs {
+    font-size: 20px;
+    color: #337ab7;
+    margin-bottom: 20px;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #515151;
+}
+
+.breadcrumbs span {
+    margin: 0 5px;
+}
+
 .form-section {
     margin-bottom: 25px;
 }

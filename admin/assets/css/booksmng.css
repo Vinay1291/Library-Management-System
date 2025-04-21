@@ -1,15 +1,17 @@
-h2 {
+
+.breadcrumbs {
+  font-size: 20px;
+  color: #337ab7;
   margin: 20px;
 }
-h2 a {
-  color: #0b0b0b;
-  font-size: 20px;
+
+.breadcrumbs a {
+  color: #515151;
   text-decoration: none;
 }
 
-h2 strong {
-  font-size: 30px;
-  color: blue;
+.breadcrumbs span {
+  margin: 0 5px;
 }
 
 .container {

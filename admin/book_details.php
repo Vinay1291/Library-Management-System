@@ -48,7 +48,7 @@ $activePage = 'manage-books'; // For sidebar
                     <span>></span>
                     <span><?= htmlspecialchars($book['title']) ?></span>
                 </div>
-                <button class="edit-button">Edit Books</button>
+                <a href="edit-book.php?id=<?= $book['id'] ?>" class="edit-button">Edit Book</a>
             </div>
             <div class="container">
         

@@ -50,7 +50,9 @@ $result = $conn->query("SELECT * FROM books LIMIT $limit OFFSET $offset");
         </div>
 
         <main>
-            <h2><a href="">Manage Books</a></h2>
+            <div class="breadcrumbs">
+                <a href="manage-books.php">Manage Books</a>
+            </div>
             <div class="container">
                 <div class="toolbar">
                     <div class="search-bar">

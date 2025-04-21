@@ -32,14 +32,16 @@
 
 .edit-button {
     background-color: #5b21b6;
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
     margin-right: 70px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9em;
     transition: background-color 0.3s ease;
+
+    display: inline-block;
+    padding: 8px 16px;
+    color: white;
+    text-decoration: none;
 }
 
 .edit-button:hover {

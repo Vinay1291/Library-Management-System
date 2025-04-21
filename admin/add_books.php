@@ -22,7 +22,7 @@ $activePage = 'manage-books';
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
-    <link rel="stylesheet" href="assets/css/booksmng.css">
+    <!-- <link rel="stylesheet" href="assets/css/booksmng.css"> -->
     <link rel="stylesheet" href="assets/css/form.css">
 </head>
 
@@ -36,7 +36,13 @@ $activePage = 'manage-books';
         </div>
         
         <main class="main">
-            <h2><a href="manage-books.php">Manage Books</a> > <a style='text-decoration: none;color:#007bff;' href="add_books.php" >Add Books</a> </h2> 
+
+            <div class="breadcrumbs">
+                <a href="manage-books.php">Manage Books</a>
+                <span>></span>
+                <span>Add Book</span>
+            </div>
+
             <div class="container">
                     <h3>Book Information</h3>
 
@@ -143,7 +149,7 @@ $activePage = 'manage-books';
                                     <div class="file-upload">
                                         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16h6v-6h4l-7-7l-7 7h4zm-4 2h14v2H5zm12-10v7h-2v-7h-4l6-6l6 6h-4z"/></svg>
                                         <span>Choose a file</span>
-                                        <input type="file" name="cover_img" id="fileAttachment">
+                                        <input type="file" name="cover_image" id="fileAttachment">
                                     </div>
                                 </div>
                             </div>
@@ -171,6 +177,10 @@ $activePage = 'manage-books';
                                 <div class="form-group">
                                     <label for="bookPublishedDate">Book Published Date</label>
                                     <input type="text" name="published_date" id="bookPublishedDate" value="29-Oct-1950">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookmoral">Moral (If any)</label>
+                                    <input type="text" name="moral" id="bookMoral" value="What You think?">
                                 </div>
                                 <div></div> <div></div> </div>
                         </div>
