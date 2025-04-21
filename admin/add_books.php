@@ -59,7 +59,7 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="isbn">ISBN/ISSN</label>
-                                    <input type="text" name="isbn" id="isbn">
+                                    <input type="text" name="isbn" id="isbn" placeholder="ISBN here">
                                 </div>
                                 <div class="form-group">
                                     <label for="genre">Genre/category</label>
@@ -122,7 +122,7 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="availableCopies">Available Copies</label>
-                                    <input type="number" name="available_copies" id="availableCopies" placeholder="Book name here">
+                                    <input type="number" name="available_copies" id="availableCopies" placeholder="Available Copies here">
                                 </div>
                                 <div class="form-group">
                                     <label for="totalCopies">Total Copies <span>*</span></label>
@@ -130,7 +130,7 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="shelfCode">Shelf/Location Code</label>
-                                    <input type="text" name="shelf_code" id="shelfCode" placeholder="Book name here">
+                                    <input type="text" name="shelf_code" id="shelfCode" placeholder="Shelf/Location Code here">
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Status <span>*</span></label>
@@ -160,11 +160,7 @@ $activePage = 'manage-books';
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="bookFeatures">Book Features <span>*</span></label>
-                                    <select name="features" id="bookFeatures">
-                                        <option>Select from list</option>
-                                        <option>Feature 1</option>
-                                        <option>Feature 2</option>
-                                    </select>
+                                    <input type="text" name="features" placeholder="Hard Cover, etc">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookVolume">Book Volume</label>
@@ -176,11 +172,11 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="bookPublishedDate">Book Published Date</label>
-                                    <input type="text" name="published_date" id="bookPublishedDate" value="29-Oct-1950">
+                                    <input type="text" name="published_date" id="bookPublishedDate" placeholder="29-Oct-1950">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookmoral">Moral (If any)</label>
-                                    <input type="text" name="moral" id="bookMoral" value="What You think?">
+                                    <input type="text" name="moral" id="bookMoral" placeholder="What You think?">
                                 </div>
                                 <div></div> <div></div> </div>
                         </div>

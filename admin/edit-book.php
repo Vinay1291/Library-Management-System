@@ -73,7 +73,7 @@ $activePage = 'manage-books';
     <title>Edit Book - <?= htmlspecialchars($book['title']) ?></title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
-    <link rel="stylesheet" href="assets/css/booksmng.css">
+    <!-- <link rel="stylesheet" href="assets/css/booksmng.css"> -->
     <link rel="stylesheet" href="assets/css/form.css">
 </head>
 
@@ -103,15 +103,15 @@ $activePage = 'manage-books';
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="bookTitle">Book title <span>*</span></label>
-                                    <input type="text" name="title" value="<?= htmlspecialchars($book['title']) ?>" required>
+                                    <input type="text" name="title" placeholder="Book name here" value="<?= htmlspecialchars($book['title']) ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="author">Author(s) <span>*</span></label>
-                                    <input type="text" name="author" value="<?= htmlspecialchars($book['author']) ?>" required>
+                                    <input type="text" name="author" placeholder="Author name here" value="<?= htmlspecialchars($book['author']) ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="isbn">ISBN/ISSN</label>
-                                    <input type="text" name="isbn" value="<?= htmlspecialchars($book['isbn']) ?>">
+                                    <input type="text" name="isbn" placeholder="ISBN here" value="<?= htmlspecialchars($book['isbn']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="genre">Genre/category</label>
@@ -144,7 +144,7 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="availableCopies">Available Copies</label>
-                                    <input type="number" name="available_copies" value="<?= htmlspecialchars($book['available_copies']) ?>">
+                                    <input type="number" name="available_copies" placeholder="Available Copies here" value="<?= htmlspecialchars($book['available_copies']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="totalCopies">Total Copies <span>*</span></label>
@@ -152,7 +152,7 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="shelfCode">Shelf/Location Code</label>
-                                    <input type="text" name="shelf_code" value="<?= htmlspecialchars($book['shelf_code']) ?>">
+                                    <input type="text" name="shelf_code" placeholder="Shelf/Location Code here" value="<?= htmlspecialchars($book['shelf_code']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Status <span>*</span></label>
@@ -173,14 +173,15 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="totalPages">Total no of Pages <span>*</span></label>
-                                    <input type="number" name="total_pages" value="<?= htmlspecialchars($book['total_pages']) ?>">
+                                    <input type="number" name="total_pages" placeholder="10 to 10,000" value="<?= htmlspecialchars($book['total_pages']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="fileAttachment">File Attachment</label>
                                     <div class="file-upload">
                                         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16h6v-6h4l-7-7l-7 7h4zm-4 2h14v2H5zm12-10v7h-2v-7h-4l6-6l6 6h-4z"/></svg>
                                         <span>Choose a file</span>
-                                        <input type="text" name="cover_img" value="<?= htmlspecialchars($book['cover_image']) ?>">
+                                        <!-- <input type="text" name="cover_img" value="<?= htmlspecialchars($book['cover_image']) ?>"> -->
+                                        <input type="file" name="cover_image" id="fileAttachment">
                                     </div>
                                 </div>
                             </div>
@@ -191,23 +192,23 @@ $activePage = 'manage-books';
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="bookFeatures">Book Features <span>*</span></label>
-                                    <input type="text" name="features" value="<?= htmlspecialchars($book['features']) ?>">
+                                    <input type="text" name="features" placeholder="Hard Cover, etc" value="<?= htmlspecialchars($book['features']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookVolume">Book Volume</label>
-                                    <input type="text" name="volume" value="<?= htmlspecialchars($book['volume']) ?>">
+                                    <input type="text" name="volume" placeholder="None" value="<?= htmlspecialchars($book['volume']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="publisherName">Publisher Name</label>
-                                    <input type="text" name="publisher_name" value="<?= htmlspecialchars($book['publisher_name']) ?>">
+                                    <input type="text" name="publisher_name" placeholder="Publisher name here" value="<?= htmlspecialchars($book['publisher_name']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookPublishedDate">Book Published Date</label>
-                                    <input type="text" name="published_date" value="<?= htmlspecialchars($book['published_date']) ?>">
+                                    <input type="text" name="published_date" placeholder="29-Oct-1950" value="<?= htmlspecialchars($book['published_date']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookmoral">Moral (If any)</label>
-                                    <input type="text" name="moral" value="<?= htmlspecialchars($book['moral']) ?>">
+                                    <input type="text" name="moral" placeholder="What You think?" value="<?= htmlspecialchars($book['moral']) ?>">
                                 </div>
                                 <div></div> <div></div> </div>
                         </div>
