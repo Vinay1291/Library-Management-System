@@ -98,18 +98,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     var_dump($status); 
-    
-    $stmt->execute();
 
-    header("Location: book_details.php?id=$id&updated=1");
-    exit;
-
-    // if ($stmt->execute()) { // likely here
-    //     header("Location: book_details.php?id=$id&updated=1");
-    //     exit;
-    // } else {
-    //     echo "Execute failed: " . $stmt->error;
-    // }
+    if ($stmt->execute()) { // likely here
+        header("Location: book_details.php?id=$id&updated=1");
+        exit;
+    } else {
+        echo "Execute failed: " . $stmt->error;
+    }
 
     $stmt->close();
 }
@@ -211,10 +206,16 @@ $activePage = 'manage-books';
                                     <input type="number" name="total_pages" placeholder="10 to 10,000" value="<?= htmlspecialchars($book['total_pages'] ?? '') ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="fileAttachment">File Attachment</label>
-                                    <div class="form-group ">
-                                        <input type="file" name="cover_image" placeholder="Choose a file" value="<?= htmlspecialchars($book['cover_image'] ?? '') ?>">
-                                    </div>
+                                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="..."/></svg>
+                                    <span>Choose a file</span>
+                                    <input type="file" name="cover_image" id="fileAttachment">
+                                    
+                                    <?php if (!empty($book['cover_image'])): ?>
+                                        <div style="margin-top: 10px;">
+                                            <strong>Current Image:</strong><br>
+                                            <img src="assets/uploads/<?= htmlspecialchars($book['cover_image']) ?>" alt="Cover Image" style="max-width: 150px; border-radius: 6px; margin-top: 5px;">
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
