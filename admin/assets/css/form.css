@@ -94,7 +94,7 @@ h2 a{
     margin-right: 5px;
 }
 
-.file-upload {
+/* .file-upload {
     display: flex;
     align-items: center;
     border: 1px dashed #ccc;
@@ -113,7 +113,7 @@ h2 a{
     width: 20px;
     height: 20px;
     margin-right: 8px;
-}
+} */
 
 .form-actions {
     display: flex;

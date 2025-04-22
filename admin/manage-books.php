@@ -67,9 +67,9 @@ $result = $conn->query("SELECT * FROM books LIMIT $limit OFFSET $offset");
                             <div class="dropdown-content" id="actionsDropdown">
                                 <a href="#" onclick="deleteSelected()">&#x1F6AB; Delete Selected</a>
                                 <a href="actions/exportCSV_books.php" onclick="exportCSV()">&#x1F4E4; Export to CSV</a>
-                                <a href="#">&#x1F4E4; Export to PDF</a>
+                                <a href="#" onclick="exportPDF()">&#x1F4E4; Export to PDF</a>
                                 <a href="javascript:window.print()">&#x1F5A8; Print List</a>
-                                <a href="#">&#x1F4E5; Import Books</a>
+                                <a href="#" onclick="importBooks()">&#x1F4E5; Import Books</a>
                             </div>
                         </div>
                     </div>
@@ -139,6 +139,7 @@ $result = $conn->query("SELECT * FROM books LIMIT $limit OFFSET $offset");
                     <div class="show-entries"> 
                         Show 
                         <select onchange="changeLimit(this.value)">
+                            <option value="5" <?= $limit == 5 ? 'selected' : '' ?>>5</option>
                             <option value="10" <?= $limit == 10 ? 'selected' : '' ?>>10</option>
                             <option value="25" <?= $limit == 25 ? 'selected' : '' ?>>25</option>
                             <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50</option>
@@ -191,9 +192,18 @@ $result = $conn->query("SELECT * FROM books LIMIT $limit OFFSET $offset");
         }
 
         function exportCSV() {
-            alert("CSV export functionality coming soon!");
+            alert("Download Starts as: books-export.csv ")
+            // alert("CSV export functionality coming soon!");
         }
         
+
+        function exportPDF() {
+            alert("PDF export functionality coming soon!");
+        }
+
+        function importBooks() {
+            alert("Import Books functionality coming soon!\n(For now use Add Books Button)")
+        }
 
         function deleteSelected() {
             const checkboxes = document.querySelectorAll('#booksTable tbody input[type="checkbox"]:checked');
