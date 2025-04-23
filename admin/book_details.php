@@ -98,7 +98,7 @@ $activePage = 'manage-books'; // For sidebar
                     </div>
                     <div class="info-item">
                         <strong>File Attachment</strong>
-                        <a href="#">
+                        <a href="assets/uploadsBooks/<?= htmlspecialchars($book['cover_image']) ?>">
                             <?= htmlspecialchars($book['cover_image']) ?>
                         </a>
                     </div>

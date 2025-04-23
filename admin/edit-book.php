@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 
 require_once '../includes/db.php';
 require_once '../includes/auth.php';
+require_once 'includes/utility.php';
 
 if (!isLoggedIn() || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
@@ -27,87 +28,80 @@ $book = $result->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle file upload
-    $cover_image = $book['cover_image']; // default to existing image
     if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = 'assets/uploadsBooks/'; // for book image uploads
-        $file_tmp = $_FILES['cover_image']['tmp_name'];
-        $file_name = basename($_FILES['cover_image']['name']);
-        $cover_image = $file_name;
+        $fileTmpPath = $_FILES['cover_image']['tmp_name'];
+        $fileName = $_FILES['cover_image']['name'];
+        $destination = '../assets/uploadsBooks/' . basename($fileName);
 
-        // Make sure the folder exists
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0755, true);
+        if (move_uploaded_file($fileTmpPath, $destination)) {
+            $cover_image = $fileName;
+        } else {
+            $cover_image = '';
         }
-
-        move_uploaded_file($file_tmp, $upload_dir . $file_name);
+    } else {
+        $cover_image = '';
     }
 
+    // Collect form data
+    $title = $_POST['title'] ?? '';
+    $author = $_POST['author'] ?? '';
+    $isbn = $_POST['isbn'] ?? '';
+    $category = $_POST['category'] ?? '';
+    $language = $_POST['language'] ?? '';
+    $availableCopies = intval($_POST['available_copies'] ?? 0);
+    $totalCopies = intval($_POST['total_copies'] ?? 1);
+    $shelfCode = $_POST['shelf_code'] ?? '';
+    $status = $_POST['status'] ?? 'Available';
+    $totalPages = intval($_POST['total_pages'] ?? 0);
+    $features = $_POST['features'] ?? '';
+    $volume = $_POST['volume'] ?? '';
+    $publisherName = $_POST['publisher_name'] ?? '';
+    $publishedDate = !empty($_POST['published_date']) ? $_POST['published_date'] : null;
+    $moral = $_POST['moral'] ?? '';
+
+    // Prepare and bind
     $stmt = $conn->prepare("UPDATE books SET 
-        title=?, author=?, isbn=?, category=?, language=?, 
-        available_copies=?, copies=?, shelf_code=?, status=?, 
-        total_pages=?, cover_image=?, features=?, volume=?, 
-        publisher_name=?, published_date=?, moral=? 
-        WHERE id=?");
+    title = ?, author = ?, isbn = ?, category = ?, language = ?, copies = ?, available_copies = ?, 
+    shelf_code = ?, status = ?, total_pages = ?, features = ?, volume = ?, publisher_name = ?, 
+    published_date = ?, moral = ?, cover_image = ?
+    WHERE id = ?");
 
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
     }
 
-    // ✅ Cast these string inputs to integers
-    $available_copies = (int) $_POST['available_copies'];
-    $total_copies = (int) $_POST['total_copies'];
-    $total_pages = (int) $_POST['total_pages'];
-
-    // ✅ Handle status safely
-    $status = $_POST['status'] ?? 'Available';
-    $allowed_statuses = ['Available', 'Lended', 'Damaged'];
-    if (!in_array($status, $allowed_statuses)) {
-        die("Invalid status value.");
-    }
-
-    // ✅ Handle nullables properly
-    $author = $_POST['author'] ?? '';
-    $shelf_code = $_POST['shelf_code'] ?? '';
-    $features = $_POST['features'] ?? '';
-    $volume = $_POST['volume'] ?? '';
-    $publisher_name = $_POST['publisher_name'] ?? '';
-    $published_date = $_POST['published_date'] ?? '';
-    $moral = $_POST['moral'] ?? '';
-    $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
-
-    $stmt->bind_param(
-        "ssssiississsssssi",
-        $_POST['title'],
-        $author,
-        $_POST['isbn'],
-        $_POST['category'],
-        $_POST['language'],
-        $available_copies,
-        $total_copies,
-        $shelf_code,
-        $status, 
-        $total_pages,
-        $cover_image,
-        $features,
-        $volume,
-        $publisher_name,
-        $published_date,
-        $moral,
-        $id
+    $stmt->bind_param("sssssiississssssi", 
+        $title, $author, $isbn, $category, $language,
+        $totalCopies, $availableCopies, $shelfCode, $status,
+        $totalPages, $features, $volume, $publisherName,
+        $publishedDate, $moral, $cover_image, $id
     );
 
-    var_dump($status); 
+    if ($stmt->execute()) {
+        $bookId = $conn->insert_id;
 
-    if ($stmt->execute()) { // likely here
+        if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+            $newFileName = generateUniqueFileName($bookId, $title, $_FILES['cover_image']['name']);
+            $destination = '../assets/uploadsBooks/' . $newFileName;
+
+            if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $destination)) {
+                $updateStmt = $conn->prepare("UPDATE books SET cover_image = ? WHERE id = ?");
+                $updateStmt->bind_param("si", $newFileName, $bookId);
+                $updateStmt->execute();
+                $updateStmt->close();
+            }
+        }
+
         header("Location: book_details.php?id=$id&updated=1");
-        exit;
+        exit();
     } else {
-        echo "Execute failed: " . $stmt->error;
+        echo "Error executing query: " . $stmt->error;
     }
 
     $stmt->close();
+    $conn->close();
 }
+
 
 $activePage = 'manage-books';
 
@@ -206,16 +200,23 @@ $activePage = 'manage-books';
                                     <input type="number" name="total_pages" placeholder="10 to 10,000" value="<?= htmlspecialchars($book['total_pages'] ?? '') ?>">
                                 </div>
                                 <div class="form-group">
-                                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="..."/></svg>
-                                    <span>Choose a file</span>
-                                    <input type="file" name="cover_image" id="fileAttachment">
-                                    
-                                    <?php if (!empty($book['cover_image'])): ?>
-                                        <div style="margin-top: 10px;">
-                                            <strong>Current Image:</strong><br>
-                                            <img src="assets/uploads/<?= htmlspecialchars($book['cover_image']) ?>" alt="Cover Image" style="max-width: 150px; border-radius: 6px; margin-top: 5px;">
-                                        </div>
-                                    <?php endif; ?>
+                                    <label for="cover_image">File Attachment</label>
+                                    <label class="file-upload" for="cover_image" style="cursor: pointer;">
+                                        <!-- Icon as a link to open current file -->
+                                        <?php if (!empty($book['cover_image'])): ?>
+                                            <a href="assets/uploadsBooks/<?= $book['cover_image'] ?>" target="_blank" title="View current cover">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path fill="currentColor" d="M9 16h6v-6h4l-7-7l-7 7h4zm-4 2h14v2H5zm12-10v7h-2v-7h-4l6-6l6 6h-4z"/>
+                                                </svg>
+                                            </a>
+                                        <?php else: ?>
+                                            <svg viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M9 16h6v-6h4l-7-7l-7 7h4zm-4 2h14v2H5zm12-10v7h-2v-7h-4l6-6l6 6h-4z"/>
+                                            </svg>
+                                        <?php endif; ?>
+                                        <span id="file-name"><?= isset($book['cover_image']) && $book['cover_image'] ? $book['cover_image'] : 'Choose a file' ?></span>
+                                    </label>
+                                    <input type="file" name="cover_image" id="cover_image" accept="image/jpeg, image/png, image/gif" style="display: none;">
                                 </div>
                             </div>
                         </div>
@@ -255,6 +256,23 @@ $activePage = 'manage-books';
         </main>
     </div>
     <?php include 'includes/footer.php' ?>
+    <script>
+    document.getElementById('cover_image').addEventListener('change', function () {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        const file = this.files[0];
+        const fileNameDisplay = document.getElementById('file-name');
+
+        if (file) {
+            if (!allowedTypes.includes(file.type)) {
+                alert("❌ Invalid image format! Only JPG, PNG, or GIF allowed.");
+                this.value = ''; // Clear the input
+                fileNameDisplay.textContent = 'Choose a file'; // Reset label
+            } else {
+                fileNameDisplay.textContent = file.name;
+            }
+        }
+    });
+    </script>
 </body>
 
 </html>
