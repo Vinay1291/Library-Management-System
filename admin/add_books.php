@@ -29,6 +29,9 @@ $activePage = 'manage-books';
     <link rel="stylesheet" href="assets/css/admin.css">
     <!-- <link rel="stylesheet" href="assets/css/booksmng.css"> -->
     <link rel="stylesheet" href="assets/css/form.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
@@ -214,6 +217,12 @@ $activePage = 'manage-books';
             }
         }
     });
+    
+    flatpickr("#bookPublishedDate", {
+        dateFormat: "d-M-Y", // Example: 29-Oct-1950
+        maxDate: "today"     // Optional: restrict future dates
+    });
+    
     </script>
 </body>
 

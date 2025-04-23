@@ -118,6 +118,8 @@ $activePage = 'manage-books';
     <link rel="stylesheet" href="assets/css/admin.css">
     <!-- <link rel="stylesheet" href="assets/css/booksmng.css"> -->
     <link rel="stylesheet" href="assets/css/form.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
@@ -238,7 +240,8 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="bookPublishedDate">Book Published Date</label>
-                                    <input type="text" name="published_date" placeholder="29-Oct-1950" value="<?= htmlspecialchars($book['published_date'] ?? '') ?>">
+                                    <input type="text" name="published_date" id="bookPublishedDate" placeholder="29-Oct-1950"
+                                        value="<?= isset($book['published_date']) ? date('d-M-Y', strtotime($book['published_date'] ?? '')) : '' ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookmoral">Moral (If any)</label>
@@ -271,6 +274,12 @@ $activePage = 'manage-books';
                 fileNameDisplay.textContent = file.name;
             }
         }
+    });
+
+    <!-- Initialize Flatpickr -->
+    flatpickr("#bookPublishedDate", {
+        dateFormat: "d-M-Y",
+        maxDate: "today"
     });
     </script>
 </body>
