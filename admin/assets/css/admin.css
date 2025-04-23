@@ -81,6 +81,14 @@
     margin-bottom: 20px;
 }
 
+.quick {
+    display: flex;
+}
+.quick p {
+    font-weight: 600;
+    margin: 8px 16px;
+}
+
 .topbar button {
     border: none;
     color: #f0f0f0;

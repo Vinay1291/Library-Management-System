@@ -53,7 +53,10 @@ $activePage = 'dashboard';
   <div class="main">
     <div class="topbar">
       <h1>Welcome Admin: <?php echo $_SESSION['name'] ?></h1>
-      <button onclick="window.location.href='add_books.php'">Add New Book</button>
+      <div class="quick">
+        <p>Quick Actions : </p>
+        <button onclick="window.location.href='add_books.php'">Add New Book</button>
+      </div>
     </div>
 
     <div class="cards">
