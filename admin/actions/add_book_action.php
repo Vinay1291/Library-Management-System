@@ -4,25 +4,12 @@ ini_set('display_errors', 1);
 session_start();
 require_once '../../includes/db.php';
 require_once '../../includes/auth.php';
+require_once '../includes/utility.php';
 
 if (!isLoggedIn() || $_SESSION['role'] !== 'admin') {
     header("Location: ../../login.php");
     exit();
 }
-
-
-function generateUniqueFileName($bookId, $title, $originalFileName) {
-    if (empty($originalFileName)) {
-        return '';
-    }
-
-    $extension = pathinfo($originalFileName, PATHINFO_EXTENSION) ?: 'jpg';
-    $cleanTitle = preg_replace("/[^a-zA-Z0-9]/", "", strtolower($title));
-    $shortTitle = substr($cleanTitle, 0, 5) ?: 'book';
-
-    return "book_" . $bookId . "_" . $shortTitle . "." . $extension;
-}
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
