@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 18, 2025 at 01:31 PM
+-- Generation Time: Apr 23, 2025 at 08:40 AM
 -- Server version: 8.0.41-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
@@ -38,23 +38,35 @@ CREATE TABLE `books` (
   `available_copies` int NOT NULL,
   `copies` int NOT NULL DEFAULT '1',
   `shelf_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `status` enum('Available','Lended','Damaged') NOT NULL,
+  `status` enum('Available','Lended','Damaged') NOT NULL DEFAULT 'Available',
   `total_pages` int DEFAULT NULL,
   `features` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `volume` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `publisher_name` int DEFAULT NULL,
-  `published_date` date DEFAULT NULL
+  `published_date` date DEFAULT NULL,
+  `moral` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `books`
 --
 
-INSERT INTO `books` (`id`, `isbn`, `title`, `author`, `cover_image`, `category`, `language`, `available_copies`, `copies`, `shelf_code`, `status`, `total_pages`, `features`, `volume`, `created_date`, `publisher_name`, `published_date`) VALUES
-(1, '132-324-54', 'DEMO', 'Lion', '1244dsfa.jpeg', 'DEMOcat', 'DEMOlang', 0, 3, '', 'Damaged', 0, '', '', '2025-04-17 14:49:44', NULL, NULL),
-(2, 'LMS-B0-01', 'The Great Gatsby', 'F. Scott Fitzgerald', NULL, 'Fiction', 'English', 0, 10, '', 'Available', 0, '', '', '2025-04-18 11:53:44', NULL, NULL),
-(4, 'LMS-B0-02', 'Pirates of the Caribbean', 'Jane Austen', NULL, 'Non-Fiction', 'Tamil', 0, 3, '', 'Lended', 0, '', '', '2025-04-18 11:59:42', NULL, NULL);
+INSERT INTO `books` (`id`, `isbn`, `title`, `author`, `cover_image`, `category`, `language`, `available_copies`, `copies`, `shelf_code`, `status`, `total_pages`, `features`, `volume`, `created_date`, `publisher_name`, `published_date`, `moral`) VALUES
+(2, 'LMS-B0-01', 'The Great Gatsby', 'F. Scott Fitzgerald', NULL, 'Fiction', 'English', 0, 10, '', 'Available', 0, '', '', '2025-04-18 11:53:44', NULL, NULL, NULL),
+(4, 'LMS-B0-02', 'Pirates of the Caribbean', 'Jane Austen', NULL, 'Non-Fiction', 'Tamil', 0, 3, '', 'Available', 0, '', '', '2025-04-18 11:59:42', NULL, NULL, NULL),
+(5, 'LMS-B0-03', 'The Silent Library', 'John Doe', 'cover1.jpg', 'Mystery', 'English', 3, 5, 'A1', 'Available', 320, 'Illustrated; Hardcover', 'Volume 1', '2025-04-22 15:18:27', 1, '2022-08-10', 'Knowledge is power.'),
+(6, 'LMS-B0-04', 'Code of Shadows', 'Jane Smith', 'cover2.jpg', 'Thriller', 'English', 2, 4, 'B2', 'Lended', 410, 'Softcover; First edition', 'Volume 2', '2025-04-22 15:18:27', 2, '2021-05-15', 'Silence hides strength.'),
+(7, 'LMS-B0-05', 'Legends of Light', 'Akira Tanaka', 'cover3.jpg', 'Fantasy', 'Japanese', 5, 7, 'C3', 'Damaged', 290, 'Deluxe edition; Colored Maps', 'Volume 3', '2025-04-22 15:18:27', 3, '2020-12-01', 'Hope shines brightest in darkness.'),
+(8, 'LMS-B0-06', 'The Lost Island', 'Emily Rose', 'island.jpg', 'Adventure', 'English', 4, 6, 'D1', 'Available', 350, NULL, NULL, '2025-04-22 15:26:39', NULL, NULL, NULL),
+(9, 'LMS-B0-07', 'Digital Fortress', NULL, NULL, 'Tech Thriller', 'English', 5, 5, 'D2', 'Available', 400, NULL, 'Vol. 1', '2025-04-22 15:26:39', 2, '2023-01-15', NULL),
+(10, 'LMS-B0-08', 'The Art of Zen', 'Takeshi Mori', NULL, 'Philosophy', 'Japanese', 2, 3, 'D3', 'Lended', 220, 'Minimalist', NULL, '2025-04-22 15:26:39', NULL, NULL, 'Inner peace matters.'),
+(11, 'LMS-B0-09', 'Ghosts of Mars', 'Linda Hale', 'mars.jpg', 'Sci-Fi', 'English', 1, 2, 'D4', 'Damaged', 310, NULL, NULL, '2025-04-22 15:26:39', NULL, NULL, NULL),
+(12, 'LMS-B0-10', 'Understanding AI', 'Dr. Kevin Singh', NULL, 'Technology', 'English', 3, 5, 'E1', 'Available', 275, 'Charts; Diagrams', 'Vol. A', '2025-04-22 15:26:39', 4, '2022-09-05', 'Machines think too.'),
+(13, 'LMS-B0-11', 'The Herbal Way', NULL, 'herbs.jpg', 'Health', 'Hindi', 6, 6, 'E2', 'Available', 180, NULL, NULL, '2025-04-22 15:26:39', NULL, NULL, NULL),
+(14, 'LMS-B0-12', 'Hidden Trails', 'Ravi Kumar', NULL, 'Travel', 'English', 4, 5, 'E3', 'Lended', 295, NULL, 'Vol. 5', '2025-04-22 15:26:39', 1, '2021-04-20', NULL),
+(15, 'LMS-B0-13', 'Beginner\'s Python', 'Aman Verma', NULL, 'Programming', 'English', 7, 8, 'E4', 'Available', 500, 'Code samples included', NULL, '2025-04-22 15:26:39', 2, NULL, NULL),
+(16, 'LMS-B0-14', 'The Last Kingdom', NULL, NULL, 'Historical', 'English', 2, 3, 'F1', 'Available', 430, NULL, NULL, '2025-04-22 15:26:39', NULL, NULL, 'Bravery lasts forever.');
 
 -- --------------------------------------------------------
 
@@ -108,7 +120,9 @@ INSERT INTO `users` (`id`, `name`, `phone`, `email`, `password`, `role`, `create
 (1, 'Admin', '9999999999', 'admin@lms.com', '$2y$10$SxXwCDkJ2NuEt6XGFeECsuPEPaBsv0WCVhh0layLdu9Ku6DRunxwq', 'admin', '2025-04-16 20:26:20'),
 (2, 'Lion King', '1234567890', 'lion@king.com', '$2y$10$GyXbauWyqv0Dg741PK8ufudf5Pq.vZkRI63Ai8d1hEiXa3JDdexWu', 'user', '2025-04-16 20:30:43'),
 (3, 'Hero Sama', '08097989507', 'sama@hero.com', '$2y$10$Rgk5CQUmTse.sbpS37TCQ.oj511dz4euthhBe9pRlZR1lZjUdjhV.', 'user', '2025-04-16 21:06:10'),
-(4, 'Aditya Vishwakarma', '9833007196', 'aditya@hero.com', '$2y$10$de3mJ0Efzw5SVCfvVQ0/M.R8NIjDxFyrQSqbAWp1i3XtCHLEiKgWi', 'user', '2025-04-18 12:19:42');
+(4, 'Aditya Vishwakarma', '9833007196', 'aditya@hero.com', '$2y$10$de3mJ0Efzw5SVCfvVQ0/M.R8NIjDxFyrQSqbAWp1i3XtCHLEiKgWi', 'user', '2025-04-18 12:19:42'),
+(5, 'Deeapk', '1234567890', 'd@l.com', '$2y$10$2l8RFmLfYg9klTQdY.WAheFeYXNjOGn39Fzhv9UUbaqmDD7qFtCUK', 'user', '2025-04-19 06:34:44'),
+(6, 'new user', '1234567890', 'new@user.com', '$2y$10$s7gtxvIyC1UxjUwYzBDJAuYygD./JQoz4bDvZ56pXN6Ogb245Zr4C', 'user', '2025-04-19 08:07:22');
 
 --
 -- Indexes for dumped tables
@@ -118,7 +132,8 @@ INSERT INTO `users` (`id`, `name`, `phone`, `email`, `password`, `role`, `create
 -- Indexes for table `books`
 --
 ALTER TABLE `books`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `isbn` (`isbn`);
 
 --
 -- Indexes for table `borrow_records`
@@ -150,7 +165,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `borrow_records`
@@ -168,7 +183,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
