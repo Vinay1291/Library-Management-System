@@ -11,6 +11,19 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'admin') {
 }
 
 
+function generateUniqueFileName($bookId, $title, $originalFileName) {
+    if (empty($originalFileName)) {
+        return '';
+    }
+
+    $extension = pathinfo($originalFileName, PATHINFO_EXTENSION) ?: 'jpg';
+    $cleanTitle = preg_replace("/[^a-zA-Z0-9]/", "", strtolower($title));
+    $shortTitle = substr($cleanTitle, 0, 5) ?: 'book';
+
+    return "book_" . $bookId . "_" . $shortTitle . "." . $extension;
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle file upload
@@ -62,6 +75,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($stmt->execute()) {
+        $bookId = $conn->insert_id;
+
+        if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+            $newFileName = generateUniqueFileName($bookId, $title, $_FILES['cover_image']['name']);
+            $destination = '../assets/uploadsBooks/' . $newFileName;
+
+            if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $destination)) {
+                $updateStmt = $conn->prepare("UPDATE books SET cover_image = ? WHERE id = ?");
+                $updateStmt->bind_param("si", $newFileName, $bookId);
+                $updateStmt->execute();
+                $updateStmt->close();
+            }
+        }
+
         header("Location: ../manage-books.php");
         exit();
     } else {

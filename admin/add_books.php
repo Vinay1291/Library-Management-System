@@ -114,7 +114,6 @@ $activePage = 'manage-books';
                                 <div class="form-group">
                                     <label for="language">Language <span>*</span></label>
                                     <select name="language" id="language">
-                                        <option>Select from list</option>
                                         <option>English</option>
                                         <option>Hindi</option>
                                         <option>Tamil</option>
@@ -145,12 +144,16 @@ $activePage = 'manage-books';
                                     <input type="number" name="total_pages" id="totalPages" placeholder="10 to 10,000">
                                 </div>
                                 <div class="form-group">
-                                    <label for="fileAttachment">File Attachment</label>
-                                    <div class="file-upload">
-                                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16h6v-6h4l-7-7l-7 7h4zm-4 2h14v2H5zm12-10v7h-2v-7h-4l6-6l6 6h-4z"/></svg>
-                                        <span>Choose a file</span>
-                                        <input type="file" name="cover_image" id="fileAttachment">
-                                    </div>
+                                    <label for="cover_image">File Attachment</label>
+                                    <!-- Wrap the file-upload div in a label -->
+                                    <label class="file-upload" for="cover_image">
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16h6v-6h4l-7-7l-7 7h4zm-4 2h14v2H5zm12-10v7h-2v-7h-4l6-6l6 6h-4z"/>
+                                        </svg>
+                                        <span style="color: #777;" id="file-name">Choose a file</span>
+                                    </label>
+                                    <!-- Keep the input outside, but connected via 'for' attribute -->
+                                    <input type="file" name="cover_image" id="cover_image" accept="image/jpeg, image/png, image/gif" style="display: none;">
                                 </div>
                             </div>
                         </div>
@@ -190,6 +193,23 @@ $activePage = 'manage-books';
         </main>
     </div>
     <?php include 'includes/footer.php' ?>
+    <script>
+    document.getElementById('cover_image').addEventListener('change', function () {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        const file = this.files[0];
+        const fileNameDisplay = document.getElementById('file-name');
+
+        if (file) {
+            if (!allowedTypes.includes(file.type)) {
+                alert("❌ Invalid image format! Only JPG, PNG, or GIF allowed.");
+                this.value = ''; // Clear the input
+                fileNameDisplay.textContent = 'Choose a file'; // Reset display
+            } else {
+                fileNameDisplay.textContent = file.name;
+            }
+        }
+    });
+    </script>
 </body>
 
 </html>
