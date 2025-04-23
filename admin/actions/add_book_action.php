@@ -10,7 +10,23 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Handle file upload
+    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['cover_image']['tmp_name'];
+        $fileName = $_FILES['cover_image']['name'];
+        $destination = '../assets/uploadsBooks/' . basename($fileName);
+
+        if (move_uploaded_file($fileTmpPath, $destination)) {
+            $cover_image = $fileName;
+        } else {
+            $cover_image = '';
+        }
+    } else {
+        $cover_image = '';
+    }
 
     // Collect form data
     $title = $_POST['title'] ?? '';
@@ -18,35 +34,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isbn = $_POST['isbn'] ?? '';
     $category = $_POST['category'] ?? '';
     $language = $_POST['language'] ?? '';
-    $available_copies = intval($_POST['available_copies'] ?? 0);
-    $total_copies = intval($_POST['total_copies'] ?? 0);
-    $shelf_code = $_POST['shelf_code'] ?? '';
-    $status = $_POST['status'] ?? 'available';
-    $total_pages = intval($_POST['total_pages'] ?? 0);
-    $cover_image = $_POST['cover_image'] ?? ''; // ✅ match column name
+    $availableCopies = intval($_POST['available_copies'] ?? 0);
+    $totalCopies = intval($_POST['total_copies'] ?? 1);
+    $shelfCode = $_POST['shelf_code'] ?? '';
+    $status = $_POST['status'] ?? 'Available';
+    $totalPages = intval($_POST['total_pages'] ?? 0);
     $features = $_POST['features'] ?? '';
     $volume = $_POST['volume'] ?? '';
-    $publisher_name = $_POST['publisher_name'] ?? '';
-    $published_date = $_POST['published_date'] ?? '';
+    $publisherName = $_POST['publisher_name'] ?? '';
+    $publishedDate = !empty($_POST['published_date']) ? $_POST['published_date'] : null;
+    $moral = $_POST['moral'] ?? '';
 
     // Prepare and bind
     $stmt = $conn->prepare("INSERT INTO books 
-        (title, author, isbn, category, language, available_copies, copies, shelf_code, status, total_pages, cover_image, features, volume, publisher_name, published_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        (title, author, isbn, category, language, copies, available_copies, shelf_code, status, total_pages, features, volume, publisher_name, published_date, moral, cover_image)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt->bind_param("sssssiissssisss", 
-        $title, $author, $isbn, $category, $language, 
-        $available_copies, $total_copies, $shelf_code, $status, 
-        $total_pages, $cover_image, $features, $volume, 
-        $publisher_name, $published_date);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("sssssiississssss", 
+        $title, $author, $isbn, $category, $language,
+        $totalCopies, $availableCopies, $shelfCode, $status,
+        $totalPages, $features, $volume, $publisherName,
+        $publishedDate, $moral, $cover_image
+    );
 
     if ($stmt->execute()) {
-        header("Location: ../admin/manage-books.php");
-
-
+        header("Location: ../manage-books.php");
         exit();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error executing query: " . $stmt->error;
     }
 
     $stmt->close();

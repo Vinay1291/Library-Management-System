@@ -46,7 +46,7 @@ $activePage = 'manage-books';
             <div class="container">
                     <h3>Book Information</h3>
 
-                    <form action="actions/add_book_action.php" method="post">
+                    <form action="actions/add_book_action.php" method="post" enctype="multipart/form-data">
                         <div class="form-section">
                             <div class="form-grid">
                                 <div class="form-group">
@@ -135,9 +135,9 @@ $activePage = 'manage-books';
                                 <div class="form-group">
                                     <label for="status">Status <span>*</span></label>
                                     <div class="radio-group">
-                                        <label><input type="radio" name="status" value="available" checked> Available</label>
-                                        <label><input type="radio" name="status" value="reserved"> Reserved</label>
-                                        <label><input type="radio" name="status" value="outOfStock"> Out of Stock</label>
+                                        <label><input type="radio" name="status" value="Available" checked> Available</label>
+                                        <label><input type="radio" name="status" value="Lended"> Reserved</label>
+                                        <label><input type="radio" name="status" value="Damaged"> Out of Stock</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
