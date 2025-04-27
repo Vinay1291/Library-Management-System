@@ -67,6 +67,14 @@
     margin: auto;
     width: 50%;
 }
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #3498db;
+    margin-bottom: 15px;
+}
 
 .info-grid {
     display: grid;

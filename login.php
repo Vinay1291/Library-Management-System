@@ -1,12 +1,18 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 require_once 'includes/db.php';  // Include DB connection
 require_once 'includes/auth.php'; // Include auth checks
 
 // Redirect to dashboard if already logged in
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+  if ($_SESSION['role'] == 'admin') {
+    header('Location: admin/');
     exit();
+  } 
+  header('Location: dashboard.php');
+  exit();
 }
 
 // Handle form submission for login
@@ -73,9 +79,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Check if the insert was successful
             if ($stmt->affected_rows > 0) {
-                $_SESSION['user_id'] = $stmt->insert_id; // Get the inserted user's ID
+                $user_id = $stmt->insert_id;
+    
+                // Step 2: Generate user_nameId using first name and user ID
+                $first_name = explode(" ", trim($name))[0];
+                $user_nameId = $first_name . '-' . $user_id;
+    
+                // Step 3: Update the user_nameId for the inserted user
+                $update_sql = "UPDATE users SET user_nameId = ? WHERE id = ?";
+                $update_stmt = $conn->prepare($update_sql);
+                $update_stmt->bind_param("si", $user_nameId, $user_id);
+                $update_stmt->execute();
+    
+                // Session setup and redirect
+                $_SESSION['user_id'] = $user_id;
                 $_SESSION['email'] = $email;
-                $_SESSION['role'] = 'user'; // Default role
+                $_SESSION['role'] = 'user';
+                $_SESSION['nameId'] = $user_nameId;
                 $_SESSION['name'] = $name;
 
                 // Redirect to dashboard
