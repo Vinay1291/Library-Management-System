@@ -58,6 +58,16 @@
     font-weight: bold;
 }
 
+.cover-img {
+    margin-bottom: 30px;
+}
+
+.cover-img img {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

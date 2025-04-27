@@ -143,6 +143,12 @@ $activePage = 'manage-books';
             <div class="container">
                     <h3>Book Information</h3>
 
+
+                    <div class="cover-img" >
+                        <!-- book cover image here -->
+                         <img src="assets/uploadsBooks/<?= htmlspecialchars($book['cover_image']) ?>" alt="Book Cover">
+                    </div>
+
                     <form method="post" enctype="multipart/form-data">
                         <div class="form-section">
                             <div class="form-grid">

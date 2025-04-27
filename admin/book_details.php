@@ -59,48 +59,54 @@ $activePage = 'manage-books'; // For sidebar
             <div class="container">
         
                 <div class="section-title">Book Information</div>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <strong>Book title</strong>
-                        <?= htmlspecialchars($book['title']) ?>
+                <div class="info-img">
+                    <div class="cover-img" >
+                        <!-- book cover image here -->
+                         <img src="assets/uploadsBooks/<?= htmlspecialchars($book['cover_image']) ?>" alt="Book Cover">
                     </div>
-                    <div class="info-item">
-                        <strong>Author(s)</strong>
-                        <?= htmlspecialchars($book['author']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>ISBN/ISSN</strong>
-                        <?= htmlspecialchars($book['isbn']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>Genre/Category</strong>
-                        <?= htmlspecialchars($book['category']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>Language</strong>
-                        <?= htmlspecialchars($book['language']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>Available Copies</strong>
-                        <?= htmlspecialchars($book['available_copies']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>Total Copies</strong>
-                        <?= htmlspecialchars($book['copies']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>Shelf/Location Code</strong>
-                        <?= htmlspecialchars($book['shelf_code']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>Status</strong>
-                        <?= htmlspecialchars($book['status']) ?>
-                    </div>
-                    <div class="info-item">
-                        <strong>File Attachment</strong>
-                        <a href="assets/uploadsBooks/<?= htmlspecialchars($book['cover_image']) ?>">
-                            <?= htmlspecialchars($book['cover_image']) ?>
-                        </a>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Book title</strong>
+                            <?= htmlspecialchars($book['title']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Author(s)</strong>
+                            <?= htmlspecialchars($book['author']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>ISBN/ISSN</strong>
+                            <?= htmlspecialchars($book['isbn']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Genre/Category</strong>
+                            <?= htmlspecialchars($book['category']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Language</strong>
+                            <?= htmlspecialchars($book['language']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Available Copies</strong>
+                            <?= htmlspecialchars($book['available_copies']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Total Copies</strong>
+                            <?= htmlspecialchars($book['copies']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Shelf/Location Code</strong>
+                            <?= htmlspecialchars($book['shelf_code']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>Status</strong>
+                            <?= htmlspecialchars($book['status']) ?>
+                        </div>
+                        <div class="info-item">
+                            <strong>File Attachment</strong>
+                            <a href="assets/uploadsBooks/<?= htmlspecialchars($book['cover_image']) ?>">
+                                <?= htmlspecialchars($book['cover_image']) ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
         
