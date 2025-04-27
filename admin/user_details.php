@@ -66,7 +66,7 @@ $activePage = 'members'; // For sidebar
     <title>User Details - <?= $username ?></title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
-    <link rel="stylesheet" href="assets/css/bookinfo.css">
+    <link rel="stylesheet" href="assets/css/userinfo.css">
 </head>
 
 
@@ -81,8 +81,19 @@ $activePage = 'members'; // For sidebar
 
         <main>
 
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="members.php">Member</a>
+                    <span>></span>
+                    User Details
+                    <span>></span>
+                    <span><?= htmlspecialchars($userInfo['name']) ?></span>
+                </div>
+                <a href="edit-book.php?id=<?= $book['id'] ?>" class="edit-button">Edit Book</a>
+            </div>
 
-            <h2>User Details</h2>
+            <div class="container">
+
 
             <?php
             $defaultPhoto = '../assets/images/default-user.jpeg'; // fallback photo
@@ -91,12 +102,24 @@ $activePage = 'members'; // For sidebar
             <img src="<?= $profilePhoto ?>" alt="Profile Photo" class="profile-photo">
 
             <?php if ($userInfo): ?>
-                <p><strong>Name:</strong> <?= $userInfo['name'] ?></p>
-                <p><strong>User Name:</strong> <?= $userInfo['user_nameId'] ?></p>
-                <p><strong>Email:</strong> <?= $userInfo['email'] ?></p>
-                <p><strong>Phone:</strong> <?= $userInfo['phone'] ?></p>
-                <p><strong>Role:</strong> <?= ucfirst($userInfo['role']) ?></p>
-
+                <div class="userinfo">
+                    <div class="info">
+                        <p><strong>Name:</strong> <?= $userInfo['name'] ?></p>
+                    </div>
+                    <div class="info">
+                        <p><strong>User Name:</strong> <?= $userInfo['user_nameId'] ?></p>
+                    </div>
+                    <div class="info">
+                        <p><strong>Email:</strong> <?= $userInfo['email'] ?></p>
+                    </div>
+                    <div class="info">
+                        <p><strong>Phone:</strong> <?= $userInfo['phone'] ?></p>
+                    </div>
+                    <div class="info">
+                        <p><strong>Role:</strong> <?= ucfirst($userInfo['role']) ?></p>
+                    </div>
+                </div>
+            </div>
                 <h3>Borrow History</h3>
                 <?php if (count($borrowHistory) > 0): ?>
                     <table border="1" cellpadding="10">
