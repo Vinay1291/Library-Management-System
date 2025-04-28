@@ -85,3 +85,15 @@ main {
     border-radius: 8px;
     color: rgb(33, 34, 35);
 }
+
+.history {
+    display: flex;
+    justify-content: space-between;
+    align-items:normal;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.history h3 {
+    margin-bottom: 20px;
+}

@@ -120,6 +120,7 @@ $activePage = 'members'; // For sidebar
                     </div>
                 </div>
             </div>
+            <div class="history">
                 <h3>Borrow History</h3>
                 <?php if (count($borrowHistory) > 0): ?>
                     <table border="1" cellpadding="10">
@@ -151,7 +152,7 @@ $activePage = 'members'; // For sidebar
             <?php else: ?>
                 <p>User not found.</p>
             <?php endif; ?>
-
+            </div>
         </main>
     </div>
 

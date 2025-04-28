@@ -81,7 +81,7 @@ $result = $conn->query($query);
                             onkeyup="filterUsers()">
                     </div>
                     <div class="actions">
-                        <!-- <button class="add-button" onclick="window.location.href='add_member.php'">+ Add Member</button> -->
+                        <button class="add-button" onclick="window.location.href='add_member.php'">+ Add Member</button>
                         <div class="actions dropdown">
                             <button class="actions-button" onclick="toggleDropdown()">Actions ▾</button>
                             <div class="dropdown-content" id="actionsDropdown">
