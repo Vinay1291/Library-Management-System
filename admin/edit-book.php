@@ -28,19 +28,22 @@ $book = $result->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle file upload
-    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['cover_image']['tmp_name'];
-        $fileName = $_FILES['cover_image']['name'];
-        $destination = '../assets/uploadsBooks/' . basename($fileName);
+    // if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+    //     $fileTmpPath = $_FILES['cover_image']['tmp_name'];
+    //     $fileName = $_FILES['cover_image']['name'];
+    //     $destination = '../assets/uploadsBooks/' . basename($fileName);
 
-        if (move_uploaded_file($fileTmpPath, $destination)) {
-            $cover_image = $fileName;
-        } else {
-            $cover_image = '';
-        }
-    } else {
-        $cover_image = '';
-    }
+    //     if (move_uploaded_file($fileTmpPath, $destination)) {
+    //         $cover_image = $fileName;
+    //     } else {
+    //         $cover_image = $book['cover_image'];
+    //         // $cover_image = '';
+    //     }
+    // } else {
+    //     $cover_image = $book['cover_image'];
+    //     // $cover_image = '';
+    // }
+
 
     // Collect form data
     $title = $_POST['title'] ?? '';
@@ -57,7 +60,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $volume = $_POST['volume'] ?? '';
     $publisherName = $_POST['publisher_name'] ?? '';
     $publishedDate = !empty($_POST['published_date']) ? $_POST['published_date'] : null;
+    $publishedDate = date('Y-m-d', strtotime($publishedDate));
     $moral = $_POST['moral'] ?? '';
+
+//     echo "<pre>";
+// print_r($_FILES['cover_image']);
+// echo "</pre>";
+// exit;
+
+    // ✅ Handle cover image upload (fix: retain old image if no new file uploaded)
+    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['cover_image']['tmp_name'];
+        $fileName = $_FILES['cover_image']['name'];
+        $destination = 'assets/uploadsBooks/' . basename($fileName);
+
+        if (move_uploaded_file($fileTmpPath, $destination)) {
+            $cover_image = $fileName;
+        } else {
+            $cover_image = $book['cover_image']; // fallback to existing image
+        }
+    } else {
+        $cover_image = $book['cover_image']; // keep old image
+    }
 
     // Prepare and bind
     $stmt = $conn->prepare("UPDATE books SET 
@@ -78,19 +102,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($stmt->execute()) {
-        $bookId = $conn->insert_id;
+        // $bookId = $conn->insert_id;
 
-        if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
-            $newFileName = generateUniqueFileName($bookId, $title, $_FILES['cover_image']['name']);
-            $destination = '../assets/uploadsBooks/' . $newFileName;
+        // if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+        //     $newFileName = generateUniqueFileName($bookId, $title, $_FILES['cover_image']['name']);
+        //     $destination = '../assets/uploadsBooks/' . $newFileName;
 
-            if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $destination)) {
-                $updateStmt = $conn->prepare("UPDATE books SET cover_image = ? WHERE id = ?");
-                $updateStmt->bind_param("si", $newFileName, $bookId);
-                $updateStmt->execute();
-                $updateStmt->close();
-            }
-        }
+        //     if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $destination)) {
+        //         $updateStmt = $conn->prepare("UPDATE books SET cover_image = ? WHERE id = ?");
+        //         $updateStmt->bind_param("si", $newFileName, $bookId);
+        //         $updateStmt->execute();
+        //         $updateStmt->close();
+        //     }
+        // }
 
         header("Location: book_details.php?id=$id&updated=1");
         exit();
@@ -247,7 +271,7 @@ $activePage = 'manage-books';
                                 <div class="form-group">
                                     <label for="bookPublishedDate">Book Published Date</label>
                                     <input type="text" name="published_date" id="bookPublishedDate" placeholder="29-Oct-1950"
-                                        value="<?= isset($book['published_date']) ? date('d-M-Y', strtotime($book['published_date'] ?? '')) : '' ?>">
+                                        value="<?= isset($book['published_date']) ? date('Y-M-d', strtotime($book['published_date'] ?? '')) : '' ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="bookmoral">Moral (If any)</label>
@@ -284,7 +308,7 @@ $activePage = 'manage-books';
 
     <!-- Initialize Flatpickr -->
     flatpickr("#bookPublishedDate", {
-        dateFormat: "d-M-Y",
+        dateFormat: "Y-M-d",
         maxDate: "today"
     });
     </script>
