@@ -1,32 +1,35 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+session_start();
 require_once '../includes/auth.php';
-// require_once '../includes/db.php';
+require_once '../includes/db.php';
 
 if (!isLoggedIn() || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
+// Total number of book records (titles)
+$resultBooks = $conn->query("SELECT COUNT(*) AS total FROM books");
+$totalBooks = $resultBooks->fetch_assoc()['total'];
 
-// // Fetch Total Books
-// $resultBooks = $conn->query("SELECT COUNT(*) AS total FROM books");
-// $totalBooks = $resultBooks->fetch_assoc()['total'];
+// Total available copies (sum of all available copies)
+$resultAvailable = $conn->query("SELECT SUM(available_copies) AS total FROM books");
+$availableBooks = $resultAvailable->fetch_assoc()['total'] ?? 0;
 
-// // Fetch Lended Books
-// $resultLended = $conn->query("SELECT COUNT(*) AS total FROM book_issues WHERE return_date IS NULL");
-// $lendedBooks = $resultLended->fetch_assoc()['total'];
+// Total lended = total copies - available copies
+$resultCopies = $conn->query("SELECT SUM(copies) AS total FROM books");
+$totalCopies = $resultCopies->fetch_assoc()['total'] ?? 0;
 
-// // Fetch Available Books
-// $availableBooks = $totalBooks - $lendedBooks;
+$lendedBooks = $totalCopies - $availableBooks;
 
-// // Fetch Total Users
-// $resultUsers = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'user'");
-// $totalUsers = $resultUsers->fetch_assoc()['total'];
+// Fetch Total Users (not admin)
+$resultUsers = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'user'");
+$totalUsers = $resultUsers->fetch_assoc()['total'];
 
-// // Fetch Overdue Books (assuming due_date exists)
-// $resultOverdue = $conn->query("SELECT COUNT(*) AS total FROM book_issues WHERE due_date < NOW() AND return_date IS NULL");
-// $overdueBooks = $resultOverdue->fetch_assoc()['total'];
-
+// Fetch Overdue Books
+$resultOverdue = $conn->query("SELECT COUNT(*) AS total FROM borrow_records WHERE due_date < NOW() AND return_date IS NULL");
+$overdueBooks = $resultOverdue->fetch_assoc()['total'];
 
 $activePage = 'dashboard';
 ?>
@@ -64,42 +67,41 @@ $activePage = 'dashboard';
         <div class="icon-container">
           <span class="icon book-icon"></span>
         </div>
-        <h3>Total Books</h3><p>0</p>
+        <h3>Total Books</h3><p><?php echo $totalBooks; ?></p>
         <button>View Details</button>
       </div>
       <div class="card card-blue">
         <div class="icon-container">
           <span class="icon book-icon"></span>
         </div>
-        <h3>Lended Books</h3><p>0</p>
+        <h3>Lended Books</h3><p><?php echo $lendedBooks; ?></p>
         <button>View Details</button>
       </div>
       <div class="card card-teal">
         <div class="icon-container">
           <span class="icon book-icon"></span>
         </div>
-        <h3>Available Books</h3><p>0</p>
+        <h3>Available Books</h3><p><?php echo $availableBooks; ?></p>
         <button>View Details</button>
       </div>
       <div class="card card-green">
         <div class="icon-container">
           <span class="icon user-icon"></span>
         </div>
-        <h3>Total Users</h3><p>0</p>
+        <h3>Total Users</h3><p><?php echo $totalUsers; ?></p>
         <button>View Details</button>
       </div>
       <div class="card card-pink">
         <div class="icon-container">
           <span class="icon overdue-icon"></span>
         </div>
-        <h3>Overdue Books</h3><p>0</p>
+        <h3>Overdue Books</h3><p><?php echo $overdueBooks; ?></p>
         <button>View Details</button>
       </div>
     </div>
 
     <div class="charts">
       <div class="chart-box"><h3>No of Visitors</h3><canvas id="visitorsChart"></canvas></div>
-      <div class="chart-box"><h3>Books Allocation by Locations</h3><canvas id="locationChart"></canvas></div>
       <div class="chart-box"><h3>Book Availability</h3><canvas id="availabilityChart"></canvas></div>
       <div class="chart-box"><h3>Book Lending Trends</h3><canvas id="lendingChart"></canvas></div>
     </div>
@@ -110,30 +112,41 @@ $activePage = 'dashboard';
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
   // Charts
+  const availableBooks = <?php echo $availableBooks; ?>;
+  const lendedBooks = <?php echo $lendedBooks; ?>;
+  const reservedBooks = 0; // if you track this, change from DB
+
+  // Book Availability Chart (Live Data)
+  new Chart(document.getElementById('availabilityChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Lended', 'Available', 'Reserved'],
+      datasets: [{
+        data: [lendedBooks, availableBooks, reservedBooks],
+        backgroundColor: ['#ef4444', '#10b981', '#f59e0b']
+      }]
+    }
+  });
+
+  // Static or future implementation for others:
   new Chart(document.getElementById('visitorsChart'), {
     type: 'bar',
     data: {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
       datasets: [
-        { label: 'Visitors', data: [80, 100, 95, 130, 150, 140, 120, 100], backgroundColor: '#5b21b6' },
-        { label: 'Lenders', data: [40, 60, 50, 70, 80, 70, 60, 50], backgroundColor: '#818cf8' }
+        {
+          label: 'Visitors',
+          // data: [0, 0, 0, 0, 0, 0, 0, 0],
+          data: [80, 100, 95, 130, 150, 140, 120, 100],
+          backgroundColor: '#5b21b6'
+        },
+        {
+          label: 'Lenders',
+          // data: [0, 0, 0, 0, 0, 0, 0, 0],
+          data: [40, 60, 50, 70, 80, 70, 60, 50],
+          backgroundColor: '#818cf8'
+        }
       ]
-    }
-  });
-
-  new Chart(document.getElementById('locationChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Chennai', 'Coimbatore', 'Hyderabad', 'Bangalore', 'Kerala'],
-      datasets: [{ data: [25, 20, 15, 25, 15], backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'] }]
-    }
-  });
-
-  new Chart(document.getElementById('availabilityChart'), {
-    type: 'pie',
-    data: {
-      labels: ['Lended', 'Available', 'Reserved'],
-      datasets: [{ data: [45, 50, 5], backgroundColor: ['#ef4444', '#10b981', '#f59e0b'] }]
     }
   });
 
@@ -141,7 +154,12 @@ $activePage = 'dashboard';
     type: 'bar',
     data: {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-      datasets: [{ label: 'Books Lent', data: [200, 300, 350, 400, 420, 380, 360, 300], backgroundColor: '#7c3aed' }]
+      datasets: [{
+        label: 'Books Lent',
+        // data: [0, 0, 0, 0, 0, 0, 0, 0],
+        data: [200, 300, 350, 400, 420, 380, 360, 300],
+        backgroundColor: '#7c3aed'
+      }]
     }
   });
 

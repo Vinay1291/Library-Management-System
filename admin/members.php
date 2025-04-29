@@ -24,6 +24,14 @@ $totalRow = $totalResult->fetch_assoc();
 $totalusers = $totalRow['total'];
 $totalPages = ceil($totalusers / $limit);
 
+// Fine var
+$fineRate = 10; // Default fallback
+$fineResult = $conn->query("SELECT value FROM settings WHERE name = 'fine_per_day'");
+
+if ($fineResult && $fineResult->num_rows > 0) {
+    $fineRow = $fineResult->fetch_assoc();
+    $fineRate = floatval($fineRow['value']); // Correct column is 'value', not 'fine_per_day'
+}
 
 // Get current page records
 $query = "
@@ -31,8 +39,8 @@ $query = "
         users.*, 
         SUM(
             CASE 
-                WHEN br.return_date IS NULL AND CURDATE() > br.due_date THEN DATEDIFF(CURDATE(), br.due_date) * 10
-                WHEN br.return_date > br.due_date THEN DATEDIFF(br.return_date, br.due_date) * 10
+                WHEN br.return_date IS NULL AND CURDATE() > br.due_date THEN DATEDIFF(CURDATE(), br.due_date) * $fineRate
+                WHEN br.return_date > br.due_date THEN DATEDIFF(br.return_date, br.due_date) * $fineRate
                 ELSE 0
             END
         ) AS total_fine,

@@ -11,9 +11,7 @@ if (!isset($activePage)) {
   </div>
   <nav id="nav-menu">
     <ul>
-      <li><a href="#">Notifications</a></li>
-      <li><a href="#">Setting</a></li>
-      <li><a href="#">Profile</a></li>
+      <li><a href="settings.php">Settings</a></li>
       <li><a class="head-link" href="../../logout.php">Logout</a></li>
     </ul>
   </nav>
