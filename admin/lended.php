@@ -71,7 +71,7 @@ $result = $conn->query($query);
 
         <div class="header">
             <div class="breadcrumbs">
-            <a href="lended.php">Manage Borrowed Books</a>
+            <a href="lended.php">Borrowed Books Records</a>
             </div>
         </div>
 

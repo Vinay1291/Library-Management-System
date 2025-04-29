@@ -7,7 +7,8 @@ if (!isset($activePage)) {
 <header>
   <div class="header-left">
     <div class="hamburger" id="hamburger">&#9776;</div>
-    <div class="logo">📚 MyLMS</div>
+    
+    <div class="logo"><a href="../../index.html">📚 MyLMS</a></div>
   </div>
   <nav id="nav-menu">
     <ul>

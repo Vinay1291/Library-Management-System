@@ -20,7 +20,7 @@ if (isset($_GET['user'])) {
 }
 
 $query = "
-    SELECT u.name, u.email, u.phone, u.role, u.user_nameId,
+    SELECT u.name, u.email, u.phone, u.role, u.user_nameId, u.profile_photo,
            b.title, br.borrow_date, br.due_date, br.return_date,
            CASE 
                WHEN br.return_date IS NULL AND br.due_date < CURDATE() THEN DATEDIFF(CURDATE(), br.due_date) * 10
@@ -46,6 +46,7 @@ while ($row = $result->fetch_assoc()) {
             'email' => $row['email'],
             'phone' => $row['phone'],
             'role' => $row['role'],
+            'profile_photo' => $row['profile_photo'],
         ];
     }
 
@@ -89,15 +90,26 @@ $activePage = 'members'; // For sidebar
                     <span>></span>
                     <span><?= htmlspecialchars($userInfo['name']) ?></span>
                 </div>
-                <a href="edit-book.php?id=<?= $book['id'] ?>" class="edit-button">Edit Book</a>
+                <a href="edit-user.php?id=<?= $userInfo['id'] ?>" class="edit-button">Edit Book</a>
             </div>
 
             <div class="container">
+        
 
+            <h1><?= $user['profile_photo'] ?> </h1>
 
             <?php
             $defaultPhoto = '../assets/images/default-user.jpeg'; // fallback photo
-            $profilePhoto = !empty($user['profile_photo']) ? '../uploads/profile_photos/' . $user['profile_photo'] : $defaultPhoto;
+            // $profilePhoto = !empty($user['profile_photo']) ?  $user['profile_photo'] : $defaultPhoto;
+           
+            // $defaultPhoto = '../assets/images/default-user.jpeg';
+            // $profilePhoto = (!empty($user['profile_photo']) && file_exists($user['profile_photo']))
+            //     ? $user['profile_photo']
+            //     : $defaultPhoto;
+            $photoPath = '' . ltrim($userInfo['profile_photo'] ?? '', '/');
+            $profilePhoto = (!empty($userInfo['profile_photo']) && file_exists($photoPath))
+                ? $photoPath
+                : $defaultPhoto;
             ?>
             <img src="<?= $profilePhoto ?>" alt="Profile Photo" class="profile-photo">
 

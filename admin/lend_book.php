@@ -57,59 +57,59 @@ $activePage = 'lend';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manage Borrowed Books</title>
+    <title>Lend a Book</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/booksmng.css">
-    <link rel="stylesheet" href="assets/css/userinfo.css">
+    <link rel="stylesheet" href="assets/css/lendaBook.css">
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
 
-<div class="body">
+    <div class="body">
 
-    <div class="sidebar">
-        <?php include 'includes/sidebar.php'; ?>
-    </div>
-
-    <main>
-
-        <div class="header">
-            <div class="breadcrumbs">
-            <a href="lend.php">Lend a Book</a>
-            </div>
+        <div class="sidebar">
+            <?php include 'includes/sidebar.php'; ?>
         </div>
 
-        <div class="container">
+        <main>
 
-
-            <?php if (isset($_GET['msg'])): ?>
-                <div class="alert"><?= htmlspecialchars($_GET['msg']) ?></div>
-            <?php endif; ?>
-
-            <form method="POST" action="lend_book.php">
-                <div class="form-group">
-                    <label for="user_id">Select User:</label>
-                    <select name="user_id" id="user_id" required>
-                        <option value="">-- Select User --</option>
-                        <?php while ($user = $users->fetch_assoc()): ?>
-                            <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['name']) ?></option>
-                        <?php endwhile; ?>
-                    </select>
+            <div class="header">
+                <div class="breadcrumbs">
+                <a href="lend.php">Lend a Book</a>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="book_id">Select Book:</label>
-                    <select name="book_id" id="book_id" required>
-                        <option value="">-- Select Book --</option>
-                        <?php while ($book = $books->fetch_assoc()): ?>
-                            <option value="<?= $book['id'] ?>"><?= htmlspecialchars($book['title']) ?></option>
-                        <?php endwhile; ?>
-                    </select>
-                </div>
+            <div class="container">
 
-                <button type="submit">Lend Book</button>
-            </form>
+
+                <?php if (isset($_GET['msg'])): ?>
+                    <div class="alert"><?= htmlspecialchars($_GET['msg']) ?></div>
+                <?php endif; ?>
+
+                <form method="POST" action="lend_book.php">
+                    <div class="form-group">
+                        <label for="user_id">Select User:</label>
+                        <select name="user_id" id="user_id" required>
+                            <option value="">-- Select User --</option>
+                            <?php while ($user = $users->fetch_assoc()): ?>
+                                <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['name']) ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book_id">Select Book:</label>
+                        <select name="book_id" id="book_id" required>
+                            <option value="">-- Select Book --</option>
+                            <?php while ($book = $books->fetch_assoc()): ?>
+                                <option value="<?= $book['id'] ?>"><?= htmlspecialchars($book['title']) ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+
+                    <button type="submit">Lend Book</button>
+                </form>
 
             </div>
         </main>

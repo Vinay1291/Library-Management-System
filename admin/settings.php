@@ -30,11 +30,14 @@ if (isset($_POST['update_profile'])) {
     // Handle Profile Photo Upload
     if (!empty($_FILES['profile_photo']['name'])) {
         $photo_name = time() . '_' . basename($_FILES['profile_photo']['name']);
-        $target_path = 'assets/uploads/profile_photos/' . $photo_name;
+        $photo_db_path = 'assets/uploads/profile_photos/' . $photo_name; // For DB and <img>
+        $target_path = '' . $photo_db_path; // For file upload from /admin/
+    
         if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $target_path)) {
-            $photo_db_path = 'assets/uploads/profile_photos/' . $photo_name;
             $conn->query("UPDATE users SET profile_photo='$photo_db_path' WHERE id=$admin_id");
         }
+    } else {
+        die('Failed to upload image. Check folder permissions and path.');
     }
 
     $update = $conn->query("UPDATE users SET name='$name', email='$email' WHERE id=$admin_id");
@@ -74,7 +77,7 @@ $activePage = 'settings';
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/booksmng.css">
-    <link rel="stylesheet" href="assets/css/userinfo.css">
+    <link rel="stylesheet" href="assets/css/settings.css">
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
@@ -113,9 +116,9 @@ $activePage = 'settings';
 
                 <div class="form-group">
                     <label>Profile Photo:</label>
-                    <input type="file" name="profile_photo">
+                    <input type="file" name="profile_photo" accept="image/jpeg, image/png, image/gif">
                     <?php if (!empty($admin['profile_photo'])): ?>
-                        <br><img src="../<?= htmlspecialchars($admin['profile_photo']) ?>" width="100" style="margin-top: 10px;">
+                        <br><img src="<?= htmlspecialchars($admin['profile_photo']) ?>" width="100" style="margin-top: 10px;">
                     <?php endif; ?>
                 </div>
 
