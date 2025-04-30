@@ -186,7 +186,7 @@ $activePage = 'manage-books';
                                 </div>
                                 <div class="form-group">
                                     <label for="isbn">ISBN/ISSN</label>
-                                    <input type="text" name="isbn" placeholder="ISBN here" value="<?= htmlspecialchars($book['isbn'] ?? '') ?>">
+                                    <input type="text" name="isbn" placeholder="ISBN here" value="<?= htmlspecialchars($book['isbn'] ?? '') ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="genre">Genre/category</label>
