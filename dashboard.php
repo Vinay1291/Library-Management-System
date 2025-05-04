@@ -34,8 +34,13 @@ $stmt->bind_result($overdueCount);
 $stmt->fetch();
 $stmt->close();
 
-// // Reserved books
-// $sql = "SELECT COUNT(*) FROM reservations WHERE user_id = ? AND status = 'pending'";
+// Reserved books
+
+// Fetch total Books
+$resultBooks = $conn->query("SELECT COUNT(*) AS total FROM books");
+$reservedCount = $resultBooks->fetch_assoc()['total'];
+
+// $sql = "SELECT COUNT(*) FROM books";
 // $stmt = $conn->prepare($sql);
 // $stmt->bind_param("i", $userId);
 // $stmt->execute();
@@ -94,23 +99,23 @@ $activePage = 'dashboard';
             <div class="widget-card">
                 <div class="widget-icon"><?= $lendedCount ?></div>
                 <h3 class="widget-title">Lended Books</h3>
-                <div class="widget-value"><?= $lendedCount ?></div>
+                <!-- <div class="widget-value"><?= $lendedCount ?></div> -->
                 <p class="widget-description">Total books currently borrowed</p>
             </div>
             <div class="widget-card">
                 <div class="widget-icon overdue"><?= $overdueCount ?></div>
                 <h3 class="widget-title">Books overdue for return</h3>
-                <div class="widget-value"><?= $overdueCount ?></div>
+                <!-- <div class="widget-value"><?= $overdueCount ?></div> -->
                 <p class="widget-description">Total books currently borrowed</p>
             </div>
-            <!-- <div class="widget-card">
+            <div class="widget-card">
                 <div class="widget-icon reserved"><?= $reservedCount ?></div>
-                <h3 class="widget-title">Reserved Books</h3>
-                <div class="widget-value"><?= $reservedCount ?></div>
-                <p class="widget-description">Books reserved but not yet issued</p>
-            </div> -->
+                <h3 class="widget-title">Total Books</h3>
+                <!-- <div class="widget-value"><?= $reservedCount ?></div> -->
+                <p class="widget-description">Total Number of Books in library</p>
+            </div>
         </div>
-
+<!-- 
         <div class="charts-row">
             <div class="chart-container">
                 <div class="chart-header">
@@ -142,7 +147,7 @@ $activePage = 'dashboard';
                     Placeholder for Lending Activity Chart
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="new-arrivals-section">
             <div class="arrivals-header">
@@ -164,7 +169,7 @@ if ($result->num_rows > 0) {
 
         // Use default if no cover
         if (!$cover) {
-            $cover = 'assets/images/default-user.jpeg';
+            $cover = 'assets/images/default-book.jpg';
         } else {
             $cover = 'admin/assets/uploadsBooks/' . $cover;
         }

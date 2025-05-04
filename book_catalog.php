@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
 
         // Use default if no cover
         if (!$cover) {
-            $cover = 'assets/images/default-user.jpeg';
+            $cover = 'assets/images/default-book.jpg';
         } else {
             $cover = 'admin/assets/uploadsBooks/' . $cover;
         }
