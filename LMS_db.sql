@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 30, 2025 at 07:07 AM
--- Server version: 8.0.41-0ubuntu0.24.04.1
+-- Generation Time: Jun 12, 2025 at 03:49 PM
+-- Server version: 8.0.42-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,36 +29,35 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `books` (
   `id` int NOT NULL,
-  `isbn` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `isbn` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `author` varchar(100) DEFAULT NULL,
   `cover_image` varchar(225) DEFAULT NULL,
   `category` varchar(100) DEFAULT NULL,
   `language` varchar(50) DEFAULT NULL,
   `available_copies` int DEFAULT NULL,
   `copies` int NOT NULL DEFAULT '1',
-  `shelf_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `shelf_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` enum('Available','Lended','Damaged') NOT NULL DEFAULT 'Available',
   `total_pages` int DEFAULT NULL,
-  `features` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `volume` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `features` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `volume` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `publisher_name` text,
   `published_date` date DEFAULT NULL,
   `moral` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `books`
 --
 
 INSERT INTO `books` (`id`, `isbn`, `title`, `author`, `cover_image`, `category`, `language`, `available_copies`, `copies`, `shelf_code`, `status`, `total_pages`, `features`, `volume`, `created_date`, `publisher_name`, `published_date`, `moral`) VALUES
-(2, 'LMS-B0-01', 'The Great Gatsby', 'F. Scott Fitzgerald', 'Great.jpeg', 'Fiction', 'English', 10, 10, '', 'Available', 0, '', '', '2025-04-18 11:53:44', '', '1970-01-01', ''),
-(5, 'LMS-B0-03', 'The Silent Library', 'John Doe', 'SilentLibrary.jpeg', 'Mystery', 'English', 5, 5, 'A1', 'Available', 320, 'Illustrated; Hardcover', 'Volume 1', '2025-04-22 15:18:27', '1', '2014-05-01', 'Knowledge is power.'),
 (7, 'LMS-B0-05', 'Legends of Light', 'Akira Tanaka', 'LegendsOfLight.jpeg', 'Fantasy', 'Japanese', 6, 7, 'C3', 'Damaged', 290, 'Deluxe edition; Colored Maps', 'Volume 3', '2025-04-22 15:18:27', '3', '2020-12-01', 'Hope shines brightest in darkness.'),
 (8, 'LMS-B0-06', 'The Lost Island', 'Emily Rose', 'LostIsland.jpeg', 'Adventure', 'English', 6, 6, 'D1', 'Available', 350, '', '', '2025-04-22 15:26:39', '', '1970-01-01', ''),
 (9, 'LMS-B0-07', 'Digital Fortress', NULL, NULL, 'Tech Thriller', 'English', 5, 5, 'D2', 'Available', 400, NULL, 'Vol. 1', '2025-04-22 15:26:39', '2', '2023-01-15', NULL),
-(10, 'LMS-B0-08', 'The Art of Zen', 'Takeshi Mori', NULL, 'Philosophy', 'Japanese', 3, 3, 'D3', 'Available', 220, 'Minimalist', '', '2025-04-22 15:26:39', '', '1970-01-01', 'Inner peace matters.');
+(10, 'LMS-B0-08', 'The Art of Zen', 'Takeshi Mori', NULL, 'Philosophy', 'Japanese', 3, 3, 'D3', 'Available', 220, 'Minimalist', '', '2025-04-22 15:26:39', '', '1970-01-01', 'Inner peace matters.'),
+(28, 'LMS-B0-09', 'Invent Your Own Computer Games with Python', 'Al Sweigart', 'inventwithpython_cover.jpeg', 'action_adventure', 'English', 2, 2, 'd2', 'Available', 376, '', '4th Edition', '2025-05-11 11:13:30', '', NULL, 'A Python Programming Learing book');
 
 -- --------------------------------------------------------
 
@@ -73,19 +72,19 @@ CREATE TABLE `borrow_records` (
   `borrow_date` date NOT NULL,
   `due_date` date DEFAULT NULL,
   `return_date` date DEFAULT NULL,
-  `status` enum('borrowed','returned','overdue') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'overdue'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('borrowed','returned','overdue') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'overdue'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `borrow_records`
 --
 
 INSERT INTO `borrow_records` (`id`, `user_id`, `book_id`, `borrow_date`, `due_date`, `return_date`, `status`) VALUES
-(1, 2, 2, '2025-04-01', NULL, '2025-04-28', 'returned'),
-(3, 6, 2, '2025-04-28', '2025-05-13', '2025-04-28', 'returned'),
-(5, 7, 7, '2025-04-29', '2025-05-14', NULL, 'borrowed'),
+(5, 7, 7, '2025-04-01', '2025-05-14', '2025-05-11', 'returned'),
 (6, 3, 7, '2025-04-29', '2025-05-14', '2025-04-30', 'returned'),
-(7, 3, 8, '2025-04-30', '2025-05-15', '2025-04-30', 'returned');
+(7, 3, 8, '2025-04-30', '2025-05-15', '2025-04-30', 'returned'),
+(8, 11, 7, '2025-05-11', '2025-05-26', NULL, 'borrowed'),
+(9, 3, 28, '2025-05-11', '2025-05-26', '2025-05-11', 'returned');
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,7 @@ CREATE TABLE `logs` (
   `user_id` int DEFAULT NULL,
   `activity` text,
   `activity_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -110,7 +109,7 @@ CREATE TABLE `settings` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `value` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `settings`
@@ -128,16 +127,16 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `user_nameId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `phone` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `user_nameId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','user') DEFAULT 'user',
-  `profile_photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `profile_photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `fine` decimal(10,2) DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -145,12 +144,15 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_nameId`, `name`, `phone`, `email`, `password`, `role`, `profile_photo`, `fine`, `created_at`) VALUES
 (1, 'lib-admin', 'Admin', '9999999999', 'admin@lms.com', '$2y$10$SxXwCDkJ2NuEt6XGFeECsuPEPaBsv0WCVhh0layLdu9Ku6DRunxwq', 'admin', 'assets/uploads/profile_photos/1745956550_admin.jpeg', 0.00, '2025-04-16 20:26:20'),
-(2, 'Lion-2', 'Lion King', '1234567890', 'lion@king.com', '$2y$10$GyXbauWyqv0Dg741PK8ufudf5Pq.vZkRI63Ai8d1hEiXa3JDdexWu', 'user', '', 0.00, '2025-04-16 20:30:43'),
+(2, 'Lion-2', 'Lion King', '1234567892', 'lion@king.com', '$2y$10$GyXbauWyqv0Dg741PK8ufudf5Pq.vZkRI63Ai8d1hEiXa3JDdexWu', 'user', 'admin/assets/uploads/profile_photos/1746360593_lionPic.jpeg', 0.00, '2025-04-16 20:30:43'),
 (3, 'hero-3', 'Hero Sama', '08097989507', 'sama@hero.com', '$2y$10$Rgk5CQUmTse.sbpS37TCQ.oj511dz4euthhBe9pRlZR1lZjUdjhV.', 'user', '', 0.00, '2025-04-16 21:06:10'),
 (5, '', 'Deeapk', '1234567890', 'd@l.com', '$2y$10$2l8RFmLfYg9klTQdY.WAheFeYXNjOGn39Fzhv9UUbaqmDD7qFtCUK', 'user', '', 0.00, '2025-04-19 06:34:44'),
 (6, 'new-6', 'new user', '1234567890', 'new@user.com', '$2y$10$s7gtxvIyC1UxjUwYzBDJAuYygD./JQoz4bDvZ56pXN6Ogb245Zr4C', 'user', '', 0.00, '2025-04-19 08:07:22'),
 (7, 'vinay-7', 'vinay vishwakarma', '0987654321', 'vi@v.com', '$2y$10$zx3fJQ/bHPajnugAQ01du.RdYdRdQTPqStC1NoR0M68ZIRx7uFgvS', 'user', NULL, 0.00, '2025-04-24 12:25:36'),
-(8, 'bude-8', 'bude', '1234567890', 'bude@lms.com', '$2y$10$u9VbIFT3d8U3QLV1r0kyn.2FtedskCpwcKM.P0lHojOYHMJwBeLW.', 'user', NULL, 0.00, '2025-04-28 18:35:25');
+(8, 'bude-8', 'bude', '1234567890', 'bude@lms.com', '$2y$10$u9VbIFT3d8U3QLV1r0kyn.2FtedskCpwcKM.P0lHojOYHMJwBeLW.', 'user', NULL, 0.00, '2025-04-28 18:35:25'),
+(9, 'Vinay-9', 'Aditya Vishwakarma', '08097989507', 'aditya@hero.com', '$2y$10$BQridChKPQCNCs4qGRQDJe8H4n8EGj/7BT.qZI6CZbfQY5xi/6SgC', 'user', 'admin/assets/uploads/profile_photos/1746362596_Screenshot from 2025-02-17 22-35-55.png', 0.00, '2025-05-04 12:42:36'),
+(10, 'Demo-10', 'Demo Account', '1234567890', 'demo@lms.com', '$2y$10$Ljtlb6PG9ryUMkED3ceeMux9hSMkK4pa8QtfK1jw1g6QJmiDohfom', 'user', NULL, 0.00, '2025-05-04 12:48:58'),
+(11, 'Punit-11', 'Punit Pandey', '9876987654', 'p@p.com', '$2y$10$JLREr.c6Dn/bUqK/iXlZKulKjTFoZVztjUABpjE.NE5E/vomU91FC', 'user', 'admin/assets/uploads/profile_photos/1746940649_dhr.webp', 0.00, '2025-05-11 05:16:56');
 
 --
 -- Indexes for dumped tables
@@ -201,13 +203,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `borrow_records`
 --
 ALTER TABLE `borrow_records`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `logs`
@@ -225,7 +227,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

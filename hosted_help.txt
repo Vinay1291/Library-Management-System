@@ -1,0 +1,9 @@
+Username : if0_39216400
+Password : BpcUzVHNW5M
+url : libmanagesys.rf.gd 
+
+
+
+Current Databases
+MySQL DB Name 	MySQL User Name 	MySQL Password 	MySQL Host Name 	PHPMyAdmin
+if0_39216400_LMS_DB	if0_39216400	(Your vPanel Password)	sql206.infinityfree.com
