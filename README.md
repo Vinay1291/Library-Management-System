@@ -4,9 +4,9 @@ You can open it by this link [http://libmanagesys.rf.gd](http://libmanagesys.rf.
 
 Create your own member acount(Warning: Don't Enter your personal Info.) or use admin.
 
-Admin E-mail ```admin@lms.com```
+Admin E-mail: ```admin@lms.com```
 
-Admin Password ```admin123```
+Admin Password: ```admin123```
 
 ```
 NOTE: Your browser may say Dangerous site
