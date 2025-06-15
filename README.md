@@ -1,5 +1,8 @@
 # Library-Management-System
 
+
+##File structure
+```
 library-management/
 │
 ├── index.php               ← Home page (served by PHP)
@@ -28,3 +31,4 @@ library-management/
 │   └── signup_action.php   ← Signup logic (insert into DB)
 │
 └── README.md               ← (Optional) Project overview
+```
