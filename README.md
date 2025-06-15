@@ -2,7 +2,7 @@
 ## How to use it 
 You can open it by this link [http://libmanagesys.rf.gd](http://libmanagesys.rf.gd).
 
-Create your own member acount(Warning: Don't Enter your personal.) or use admin.
+Create your own member acount(Warning: Don't Enter your personal Info.) or use admin.
 
 Admin E-mail ```admin@lms.com```
 
