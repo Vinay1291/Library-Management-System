@@ -1,5 +1,9 @@
 # Library-Management-System
-
+## How to use it 
+You can open it by this link [http://libmanagesys.rf.gd](http://libmanagesys.rf.gd).
+Create your own member acount or use admin.
+Admin user name ```admin@lms.com```
+Admin password ```admin123```
 
 ## File structure
 ```
